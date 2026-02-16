@@ -433,7 +433,7 @@
       secondary_text: '#a0a0a0',
       font_family: 'Montserrat',
       font_size: 16,
-      maps_link: 'https://maps.app.goo.gl/YOUR_BUSINESS_ID_HERE'
+      maps_link: 'https://share.google/9tNweDuavZ5V9igRn'
     };
 
     async function onConfigChange(config) {
@@ -549,7 +549,7 @@
     // Floating Feedback Button - Opens Google Maps for reviews
     document.getElementById('floating-review-btn').addEventListener('click', () => {
       const mapsUrl = (window.elementSdk && window.elementSdk.config && window.elementSdk.config.maps_link) || defaultConfig.maps_link;
-      if (mapsUrl && mapsUrl !== 'https://maps.app.goo.gl/YOUR_BUSINESS_ID_HERE') {
+      if (mapsUrl && mapsUrl !== 'https://share.google/9tNweDuavZ5V9igRn') {
         window.open(mapsUrl, '_blank', 'noopener,noreferrer');
       } else {
         alert('Please update the Google Maps link in the configuration first');
