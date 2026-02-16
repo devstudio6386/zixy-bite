@@ -415,7 +415,6 @@
      <p class="text-center text-gray-500 text-sm font-light tracking-wider">© 2024Zixy Bite Resturant. All Rights Reserved.</p>
     </div>
    </footer>
-  </div><!-- Floating Feedback & Review Button --> <button id="floating-review-btn" class="floating-btn">FEEDBACK &amp; REVIEW</button>
   <script>
     const defaultConfig = {
       hero_headline: 'ZIXY BITE RESTURANT',
@@ -556,5 +555,51 @@
       }
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cee1185f566338a',t:'MTc3MTI1NTY0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+<style>
+.review-float {
+  position: fixed;
+  bottom: 160px;   /* 👈 Upar shift */
+  right: 20px;
+  z-index: 9999;
+  animation: floatMove 2.5s ease-in-out infinite;
+}
+
+@keyframes floatMove {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+.review-btn {
+  background: linear-gradient(135deg, #34a853, #0f9d58);
+  color: #fff;
+  padding: 13px 22px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 18px rgba(52,168,83,0.7);
+}
+</style>
+
+<div class="review-float">
+  <button class="review-btn" onclick="openReview()">
+    ⭐ Feedback / Review
+  </button>
+</div>
+
+<script>
+function openReview() {
+  window.open(
+    "https://share.google/PGjUzBJa2oaN7Mgqm",
+    "_blank"
+  );
+}
+</script>
+
+
+
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cee1185f566338a',t:'MTc3MTI1NTY0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
 </html>
