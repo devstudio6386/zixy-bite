@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurélien Fine Dining</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold-start: #c8a95e;
+      --gold-end: #f5d27a;
+      --bg-dark: #0f0f0f;
+      --bg-card: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0a0;
+      --text-accent: #d4af37;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      height: 100%;
+      width: 100%;
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Montserrat', sans-serif;
+      scroll-behavior: smooth;
+    }
+    
+    .main-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    
+    .font-serif {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+    
+    .gold-gradient {
+      background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
+    }
+    
+    .gold-text {
+      background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .gold-border {
+      border: 1px solid rgba(200, 169, 94, 0.3);
+      box-shadow: 0 0 20px rgba(200, 169, 94, 0.1), inset 0 0 20px rgba(200, 169, 94, 0.05);
+    }
+    
+    .glass-card {
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    
+    .btn-outline {
+      border: 2px solid var(--gold-start);
+      color: var(--gold-start);
+      background: transparent;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      padding: 12px 32px;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+    
+    .btn-outline:hover {
+      background: rgba(200, 169, 94, 0.1);
+      box-shadow: 0 0 20px rgba(200, 169, 94, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .card-hover {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(200, 169, 94, 0.15);
+    }
+    
+    .price-badge {
+      background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
+      color: #0f0f0f;
+    }
+    
+    .image-zoom {
+      overflow: hidden;
+    }
+    
+    .image-zoom img {
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .image-zoom:hover img {
+      transform: scale(1.1);
+    }
+    
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .hero-wave {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(200, 169, 94, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(245, 210, 122, 0.06) 0%, transparent 50%),
+        linear-gradient(180deg, transparent 0%, rgba(200, 169, 94, 0.03) 50%, transparent 100%);
+      pointer-events: none;
+    }
+    
+    .star {
+      color: var(--gold-start);
+    }
+    
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-start), transparent);
+    }
+    
+    .quote-mark {
+      font-size: 4rem;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .section-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Floating Button Styles */
+    .floating-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 50;
+      width: auto;
+      height: auto;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+      transition: all 0.3s ease;
+      font-weight: 700;
+      font-size: 14px;
+      color: #ffffff;
+      text-align: center;
+      padding: 16px 20px;
+      animation: float 3s ease-in-out infinite;
+      white-space: nowrap;
+    }
+
+    .floating-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(34, 197, 94, 0.6);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @media (max-width: 640px) {
+      .floating-btn {
+        bottom: 16px;
+        right: 16px;
+        font-size: 12px;
+        padding: 14px 16px;
+      }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div class="main-wrapper"><!-- Hero Section -->
+   <section class="relative w-full min-h-screen flex items-center justify-center overflow-hidden"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&amp;h=900&amp;fit=crop" alt="Fine dining restaurant" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.background='#0f0f0f';">
+    <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/60"></div>
+    <div class="hero-wave"></div>
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+     <h1 id="hero-headline" class="font-serif text-5xl md:text-7xl font-bold mb-6 gold-text leading-tight">ZIXY BITE RESTURANT</h1>
+     <p id="hero-subheading" class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed font-light">A journey of flavor, artistry, and refined ambiance crafted for the discerning palate.</p>
+     <div class="flex flex-col sm:flex-row gap-4 justify-center"><button id="btn-explore" class="btn-outline">Explore Menu</button>
+     </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+     <div class="w-6 h-10 border-2 border-[#c8a95e] rounded-full flex justify-center opacity-50">
+      <div class="w-1 h-3 bg-[#c8a95e] rounded-full mt-2 animate-bounce"></div>
+     </div>
+    </div>
+   </section><!-- Popular Dishes Section -->
+   <section class="py-24 px-4" style="background: #0f0f0f;">
+    <div class="section-container">
+     <div class="text-center mb-16 fade-in"><span class="text-[#c8a95e] text-sm uppercase tracking-widest font-medium">Our Signature Selection</span>
+      <h2 id="popular-title" class="font-serif text-4xl md:text-5xl mt-4 gold-text">Popular Dishes</h2>
+      <div class="w-24 h-px mx-auto mt-6 gold-gradient"></div>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"><!-- Dish Card 1 -->
+      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in">
+       <div class="image-zoom h-48 relative"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&amp;h=900&amp;fit=crop" alt="Wagyu Beef Sliders" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#2d1f14';">
+        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
+         $38
+        </div>
+       </div>
+       <div class="p-6">
+        <div class="flex mb-2">
+         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <h3 class="font-serif text-xl text-white mb-2">Wagyu Beef Sliders</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Premium Japanese A5 wagyu, truffle aioli, brioche buns</p>
+       </div>
+      </div><!-- Dish Card 2 -->
+      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.1s;">
+       <div class="image-zoom h-48 relative"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&amp;h=900&amp;fit=crop" alt="Lobster Mac &amp; Cheese" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#daa520';">
+        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
+         $26
+        </div>
+       </div>
+       <div class="p-6">
+        <div class="flex mb-2">
+         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <h3 class="font-serif text-xl text-white mb-2">Lobster Mac &amp; Cheese</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Maine lobster, aged gruyère, panko crust, black truffle</p>
+       </div>
+      </div><!-- Dish Card 3 -->
+      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.2s;">
+       <div class="image-zoom h-48 relative"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&amp;h=900&amp;fit=crop" alt="Beetroot &amp; Goat Cheese" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#8B0000';">
+        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
+         $24
+        </div>
+       </div>
+       <div class="p-6">
+        <div class="flex mb-2">
+         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <h3 class="font-serif text-xl text-white mb-2">Beetroot &amp; Goat Cheese</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Roasted heirloom beets, whipped chèvre, candied walnuts</p>
+       </div>
+      </div><!-- Dish Card 4 -->
+      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.3s;">
+       <div class="image-zoom h-48 relative"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&amp;h=900&amp;fit=crop" alt="Chocolate Lava Cake" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#3d2817';">
+        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
+         $18
+        </div>
+       </div>
+       <div class="p-6">
+        <div class="flex mb-2">
+         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <h3 class="font-serif text-xl text-white mb-2">Chocolate Lava Cake</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Valrhona dark chocolate, molten center, vanilla bean gelato</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Featured Menu Section -->
+   <section class="py-24 px-4" style="background: linear-gradient(180deg, #0f0f0f 0%, #151515 50%, #0f0f0f 100%);">
+    <div class="section-container">
+     <div class="text-center mb-16 fade-in"><span class="text-[#c8a95e] text-sm uppercase tracking-widest font-medium">Curated Selections</span>
+      <h2 id="featured-title" class="font-serif text-4xl md:text-5xl mt-4 gold-text">Featured Menu</h2>
+      <div class="w-24 h-px mx-auto mt-6 gold-gradient"></div>
+     </div>
+     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in group">
+       <div class="image-zoom h-64 relative"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&amp;h=900&amp;fit=crop" alt="Pan-Seared Scallops" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#daa520';">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-4 left-4 right-4">
+         <span class="price-badge px-4 py-2 rounded-full text-sm font-bold">$38</span>
+        </div>
+       </div>
+       <div class="p-6">
+        <h3 class="font-serif text-2xl text-white mb-3 group-hover:text-[#c8a95e] transition-colors">Pan-Seared Scallops</h3>
+        <p class="text-gray-400 leading-relaxed">Diver scallops with saffron-infused risotto, citrus beurre blanc</p>
+       </div>
+      </div>
+      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in group" style="transition-delay: 0.15s;">
+       <div class="image-zoom h-64 relative"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&amp;h=900&amp;fit=crop" alt="Truffle Wild Mushroom Pasta" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#d4a574';">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-4 left-4 right-4">
+         <span class="price-badge px-4 py-2 rounded-full text-sm font-bold">$26</span>
+        </div>
+       </div>
+       <div class="p-6">
+        <h3 class="font-serif text-2xl text-white mb-3 group-hover:text-[#c8a95e] transition-colors">Truffle Wild Mushroom</h3>
+        <p class="text-gray-400 leading-relaxed">House-made tagliatelle, black truffle shavings, forest mushroom</p>
+       </div>
+      </div>
+      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in group" style="transition-delay: 0.3s;">
+       <div class="image-zoom h-64 relative"><img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=500&amp;h=350&amp;fit=crop" alt="Braised Lamb Shank" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#654321';">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-4 left-4 right-4">
+         <span class="price-badge px-4 py-2 rounded-full text-sm font-bold">$42</span>
+        </div>
+       </div>
+       <div class="p-6">
+        <h3 class="font-serif text-2xl text-white mb-3 group-hover:text-[#c8a95e] transition-colors">Braised Lamb Shank</h3>
+        <p class="text-gray-400 leading-relaxed">12-hour slow-braised lamb, roasted root vegetables, red wine</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Testimonials Section -->
+   <section class="py-24 px-4" style="background: #0f0f0f;">
+    <div class="section-container">
+     <div class="text-center mb-16 fade-in"><span class="text-[#c8a95e] text-sm uppercase tracking-widest font-medium">What Our Guests Say</span>
+      <h2 id="testimonials-title" class="font-serif text-4xl md:text-5xl mt-4 gold-text">Guest Experiences</h2>
+      <div class="w-24 h-px mx-auto mt-6 gold-gradient"></div>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="glass-card gold-border rounded-3xl p-8 card-hover fade-in">
+       <div class="quote-mark font-serif">
+        "
+       </div>
+       <p class="text-gray-300 text-lg leading-relaxed mb-6 italic">An extraordinary culinary journey. Every dish was a masterpiece, and the ambiance transported us to another world.</p>
+       <div class="flex items-center">
+        <div class="w-14 h-14 rounded-full gold-gradient flex items-center justify-center text-xl font-bold text-[#0f0f0f]">
+         SA
+        </div>
+        <div class="ml-4">
+         <p class="font-semibold text-white">Sarah Anderson</p>
+         <p class="text-[#c8a95e] text-sm">Food Critic, NY Times</p>
+        </div>
+       </div>
+      </div>
+      <div class="glass-card gold-border rounded-3xl p-8 card-hover fade-in" style="transition-delay: 0.15s;">
+       <div class="quote-mark font-serif">
+        "
+       </div>
+       <p class="text-gray-300 text-lg leading-relaxed mb-6 italic">The Wagyu was absolutely divine. This restaurant sets a new standard for fine dining excellence.</p>
+       <div class="flex items-center">
+        <div class="w-14 h-14 rounded-full gold-gradient flex items-center justify-center text-xl font-bold text-[#0f0f0f]">
+         MC
+        </div>
+        <div class="ml-4">
+         <p class="font-semibold text-white">Michael Chen</p>
+         <p class="text-[#c8a95e] text-sm">Executive Chef</p>
+        </div>
+       </div>
+      </div>
+      <div class="glass-card gold-border rounded-3xl p-8 card-hover fade-in" style="transition-delay: 0.3s;">
+       <div class="quote-mark font-serif">
+        "
+       </div>
+       <p class="text-gray-300 text-lg leading-relaxed mb-6 italic">Perfect for our anniversary. The attention to detail and impeccable service made it truly unforgettable.</p>
+       <div class="flex items-center">
+        <div class="w-14 h-14 rounded-full gold-gradient flex items-center justify-center text-xl font-bold text-[#0f0f0f]">
+         ER
+        </div>
+        <div class="ml-4">
+         <p class="font-semibold text-white">Emma Roberts</p>
+         <p class="text-[#c8a95e] text-sm">Verified Guest</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-16 px-4" style="background: #0a0a0a;">
+    <div class="section-container">
+     <div class="divider mb-12"></div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+      <div class="text-center md:text-left">
+       <h3 class="font-serif text-3xl gold-text mb-4">Aurélien</h3>
+       <p class="text-gray-400 leading-relaxed">Where culinary artistry meets refined elegance. An unforgettable dining experience awaits.</p>
+      </div>
+      <div class="text-center">
+       <h4 class="text-[#c8a95e] uppercase tracking-widest text-sm mb-4">Contact Us</h4>
+       <p id="footer-address" class="text-gray-300 mb-2">123 Elegance Avenue, Manhattan</p>
+       <p id="footer-phone" class="text-gray-300 mb-4">+1 (212) 555-0123</p>
+      </div>
+      <div class="text-center md:text-right">
+       <h4 class="text-[#c8a95e] uppercase tracking-widest text-sm mb-4">Hours</h4>
+       <p class="text-gray-300">Tuesday - Sunday</p>
+       <p class="text-gray-400 text-sm mb-2">5:00 PM - 11:00 PM</p>
+       <p class="text-gray-300">Closed Monday</p>
+      </div>
+     </div>
+     <div class="divider mb-8"></div>
+     <p class="text-center text-gray-500 text-sm font-light tracking-wider">© 2024 Aurélien Fine Dining. All Rights Reserved.</p>
+    </div>
+   </footer>
+  </div><!-- Floating Feedback & Review Button --> <button id="floating-review-btn" class="floating-btn">FEEDBACK &amp; REVIEW</button>
+  <script>
+    const defaultConfig = {
+      hero_headline: 'ZIXY BITE RESTURANT',
+      hero_subheading: 'A journey of flavor, artistry, and refined ambiance crafted for the discerning palate.',
+      button_explore: 'Explore Menu',
+      popular_title: 'Popular Dishes',
+      featured_title: 'Featured Menu',
+      testimonials_title: 'Guest Experiences',
+      restaurant_address: '123 Elegance Avenue, Manhattan',
+      restaurant_phone: '+1 (212) 555-0123',
+      background_color: '#0f0f0f',
+      gold_accent: '#c8a95e',
+      text_color: '#ffffff',
+      card_color: '#1a1a1a',
+      secondary_text: '#a0a0a0',
+      font_family: 'Montserrat',
+      font_size: 16,
+      maps_link: 'https://maps.app.goo.gl/YOUR_BUSINESS_ID_HERE'
+    };
+
+    async function onConfigChange(config) {
+      document.getElementById('hero-headline').textContent = config.hero_headline || defaultConfig.hero_headline;
+      document.getElementById('hero-subheading').textContent = config.hero_subheading || defaultConfig.hero_subheading;
+      document.getElementById('btn-explore').textContent = config.button_explore || defaultConfig.button_explore;
+      
+      document.getElementById('popular-title').textContent = config.popular_title || defaultConfig.popular_title;
+      document.getElementById('featured-title').textContent = config.featured_title || defaultConfig.featured_title;
+      document.getElementById('testimonials-title').textContent = config.testimonials_title || defaultConfig.testimonials_title;
+      
+      document.getElementById('footer-address').textContent = config.restaurant_address || defaultConfig.restaurant_address;
+      document.getElementById('footer-phone').textContent = config.restaurant_phone || defaultConfig.restaurant_phone;
+      
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const goldAccent = config.gold_accent || defaultConfig.gold_accent;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const cardColor = config.card_color || defaultConfig.card_color;
+      const secondaryText = config.secondary_text || defaultConfig.secondary_text;
+      
+      document.documentElement.style.setProperty('--bg-dark', bgColor);
+      document.documentElement.style.setProperty('--gold-start', goldAccent);
+      document.documentElement.style.setProperty('--text-primary', textColor);
+      document.documentElement.style.setProperty('--bg-card', cardColor);
+      document.documentElement.style.setProperty('--text-secondary', secondaryText);
+      
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      const fontSize = config.font_size || defaultConfig.font_size;
+      document.body.style.fontFamily = `${fontFamily}, sans-serif`;
+      document.body.style.fontSize = `${fontSize}px`;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+          },
+          {
+            get: () => config.card_color || defaultConfig.card_color,
+            set: (value) => { config.card_color = value; window.elementSdk.setConfig({ card_color: value }); }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+          },
+          {
+            get: () => config.gold_accent || defaultConfig.gold_accent,
+            set: (value) => { config.gold_accent = value; window.elementSdk.setConfig({ gold_accent: value }); }
+          },
+          {
+            get: () => config.secondary_text || defaultConfig.secondary_text,
+            set: (value) => { config.secondary_text = value; window.elementSdk.setConfig({ secondary_text: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => { config.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => { config.font_size = value; window.elementSdk.setConfig({ font_size: value }); }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['hero_headline', config.hero_headline || defaultConfig.hero_headline],
+        ['hero_subheading', config.hero_subheading || defaultConfig.hero_subheading],
+        ['button_explore', config.button_explore || defaultConfig.button_explore],
+        ['popular_title', config.popular_title || defaultConfig.popular_title],
+        ['featured_title', config.featured_title || defaultConfig.featured_title],
+        ['testimonials_title', config.testimonials_title || defaultConfig.testimonials_title],
+        ['restaurant_address', config.restaurant_address || defaultConfig.restaurant_address],
+        ['restaurant_phone', config.restaurant_phone || defaultConfig.restaurant_phone],
+        ['maps_link', config.maps_link || defaultConfig.maps_link]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    document.getElementById('btn-explore').addEventListener('click', () => {
+      document.querySelector('section:nth-of-type(2)').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Floating Feedback Button - Opens Google Maps for reviews
+    document.getElementById('floating-review-btn').addEventListener('click', () => {
+      const mapsUrl = (window.elementSdk && window.elementSdk.config && window.elementSdk.config.maps_link) || defaultConfig.maps_link;
+      if (mapsUrl && mapsUrl !== 'https://maps.app.goo.gl/YOUR_BUSINESS_ID_HERE') {
+        window.open(mapsUrl, '_blank', 'noopener,noreferrer');
+      } else {
+        alert('Please update the Google Maps link in the configuration first');
+      }
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cee1185f566338a',t:'MTc3MTI1NTY0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
