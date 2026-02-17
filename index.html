@@ -1,50 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="h-full">
- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aurélien Fine Dining</title>
+  <title>Zixy Bite - Luxury Restaurant</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="/_sdk/element_sdk.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --gold-start: #c8a95e;
       --gold-end: #f5d27a;
-      --bg-dark: #0f0f0f;
-      --bg-card: #1a1a1a;
-      --text-primary: #ffffff;
-      --text-secondary: #a0a0a0;
-      --text-accent: #d4af37;
+      --charcoal: #0f0f0f;
+      --charcoal-light: #1a1a1a;
+      --charcoal-lighter: #252525;
     }
     
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-start) var(--charcoal);
     }
     
-    html, body {
-      height: 100%;
-      width: 100%;
-      background-color: var(--bg-dark);
-      color: var(--text-primary);
-      font-family: 'Montserrat', sans-serif;
-      scroll-behavior: smooth;
+    *::-webkit-scrollbar {
+      width: 8px;
     }
     
-    .main-wrapper {
-      width: 100%;
-      height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
+    *::-webkit-scrollbar-track {
+      background: var(--charcoal);
     }
     
-    .font-serif {
-      font-family: 'Cormorant Garamond', Georgia, serif;
+    *::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--gold-start), var(--gold-end));
+      border-radius: 4px;
     }
+    
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-playfair { font-family: 'Playfair Display', serif; }
+    .font-poppins { font-family: 'Poppins', sans-serif; }
     
     .gold-gradient {
       background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
@@ -57,753 +49,1399 @@
       background-clip: text;
     }
     
-    .gold-border {
-      border: 1px solid rgba(200, 169, 94, 0.3);
-      box-shadow: 0 0 20px rgba(200, 169, 94, 0.1), inset 0 0 20px rgba(200, 169, 94, 0.05);
+    .gold-glow {
+      box-shadow: 0 0 30px rgba(200, 169, 94, 0.3), 0 0 60px rgba(200, 169, 94, 0.1);
     }
     
-    .glass-card {
-      background: rgba(26, 26, 26, 0.8);
+    .gold-glow-soft {
+      box-shadow: 0 0 20px rgba(200, 169, 94, 0.15);
+    }
+    
+    .glassmorphism {
+      background: rgba(15, 15, 15, 0.7);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(200, 169, 94, 0.2);
+    }
+    
+    .glassmorphism-light {
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(200, 169, 94, 0.15);
+    }
+    
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+      font-size: 0.875rem;
+      letter-spacing: 0.1em;
+      color: #e5e5e5;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-start), var(--gold-end));
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .nav-link:hover {
+      color: var(--gold-end);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
+      color: #0f0f0f;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 20px rgba(200, 169, 94, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(200, 169, 94, 0.5);
     }
     
     .btn-outline {
       border: 2px solid var(--gold-start);
-      color: var(--gold-start);
+      color: var(--gold-end);
+      transition: all 0.4s ease;
       background: transparent;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      padding: 12px 32px;
-      border-radius: 50px;
-      cursor: pointer;
     }
     
     .btn-outline:hover {
       background: rgba(200, 169, 94, 0.1);
-      box-shadow: 0 0 20px rgba(200, 169, 94, 0.3);
+      box-shadow: 0 0 30px rgba(200, 169, 94, 0.3);
       transform: translateY(-2px);
     }
     
-    .card-hover {
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    .dish-card {
+      background: linear-gradient(145deg, rgba(26, 26, 26, 0.95), rgba(15, 15, 15, 0.98));
+      border: 1px solid rgba(200, 169, 94, 0.3);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: pointer;
     }
     
-    .card-hover:hover {
+    .dish-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(200, 169, 94, 0.15);
+      box-shadow: 0 20px 50px rgba(200, 169, 94, 0.2);
+      border-color: var(--gold-start);
+    }
+    
+    .dish-image {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    
+    .dish-card:hover .dish-image {
+      transform: scale(1.05);
     }
     
     .price-badge {
       background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
       color: #0f0f0f;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 14px;
     }
     
-    .image-zoom {
+    .category-header {
+      text-align: center;
+      margin: 60px 0 40px 0;
+    }
+    
+    .category-title {
+      font-size: 2.25rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-family: 'Cinzel', serif;
+    }
+    
+    .category-subtitle {
+      font-size: 1.125rem;
+      font-style: italic;
+      color: #9ca3af;
+      margin-bottom: 30px;
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-start), transparent);
+      margin: 80px 0;
+    }
+    
+    .hero-overlay {
+      background: linear-gradient(135deg, rgba(15, 15, 15, 0.85), rgba(15, 15, 15, 0.6), rgba(15, 15, 15, 0.85));
+    }
+    
+    .light-streak {
+      position: absolute;
+      top: 0;
+      right: 20%;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(180deg, transparent, var(--gold-start), var(--gold-end), transparent);
+      opacity: 0.4;
+      animation: streak 3s ease-in-out infinite;
+    }
+    
+    @keyframes streak {
+      0%, 100% { opacity: 0.2; transform: translateX(0); }
+      50% { opacity: 0.5; transform: translateX(5px); }
+    }
+    
+    .page-transition {
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .hidden-page {
+      display: none;
+    }
+    
+    .testimonial-card {
+      background: linear-gradient(145deg, rgba(26, 26, 26, 0.9), rgba(15, 15, 15, 0.95));
+      border: 1px solid rgba(200, 169, 94, 0.2);
+      border-radius: 20px;
+      padding: 40px;
+      position: relative;
+    }
+    
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      font-size: 80px;
+      font-family: 'Playfair Display', serif;
+      color: rgba(200, 169, 94, 0.2);
+      line-height: 1;
+    }
+    
+    .gallery-item {
+      position: relative;
       overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid rgba(200, 169, 94, 0.2);
+      aspect-ratio: 1;
     }
     
-    .image-zoom img {
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
     }
     
-    .image-zoom:hover img {
+    .gallery-item:hover img {
       transform: scale(1.1);
     }
     
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    .hero-wave {
+    .gallery-item::after {
+      content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(200, 169, 94, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(245, 210, 122, 0.06) 0%, transparent 50%),
-        linear-gradient(180deg, transparent 0%, rgba(200, 169, 94, 0.03) 50%, transparent 100%);
-      pointer-events: none;
+      inset: 0;
+      background: linear-gradient(180deg, transparent, rgba(200, 169, 94, 0.1));
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
     
-    .star {
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+    
+    .star-rating {
       color: var(--gold-start);
-    }
-    
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold-start), transparent);
-    }
-    
-    .quote-mark {
-      font-size: 4rem;
-      line-height: 1;
-      background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .section-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* Floating Button Styles */
-    .floating-btn {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 50;
-      width: auto;
-      height: auto;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
-      transition: all 0.3s ease;
-      font-weight: 700;
+      letter-spacing: 2px;
       font-size: 14px;
-      color: #ffffff;
-      text-align: center;
-      padding: 16px 20px;
-      animation: float 3s ease-in-out infinite;
-      white-space: nowrap;
     }
-
-    .floating-btn:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 35px rgba(34, 197, 94, 0.6);
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-15px); }
-    }
-
-    @media (max-width: 640px) {
-      .floating-btn {
-        bottom: 16px;
-        right: 16px;
-        font-size: 12px;
-        padding: 14px 16px;
-      }
+    
+    html {
+      scroll-behavior: smooth;
     }
   </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full">
-  <div class="main-wrapper"><!-- Hero Section -->
-   <section class="relative w-full min-h-screen flex items-center justify-center overflow-hidden"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&amp;h=900&amp;fit=crop" alt="Fine dining restaurant" loading="lazy" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.background='#0f0f0f';">
-    <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/60"></div>
-    <div class="hero-wave"></div>
-    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
-     <h1 id="hero-headline" class="font-serif text-5xl md:text-7xl font-bold mb-6 gold-text leading-tight">ZIXY BITE RESTURANT</h1>
-     <p id="hero-subheading" class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed font-light">A journey of flavor, artistry, and refined ambiance crafted for the discerning palate.</p>
-     <div class="flex flex-col sm:flex-row gap-4 justify-center"><button id="btn-explore" class="btn-outline">Explore Menu</button>
-     </div>
-    </div>
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-     <div class="w-6 h-10 border-2 border-[#c8a95e] rounded-full flex justify-center opacity-50">
-      <div class="w-1 h-3 bg-[#c8a95e] rounded-full mt-2 animate-bounce"></div>
-     </div>
-    </div>
-   </section><!-- Popular Dishes Section -->
-   <section class="py-24 px-4" style="background: #0f0f0f;">
-    <div class="section-container">
-     <div class="text-center mb-16 fade-in"><span class="text-[#c8a95e] text-sm uppercase tracking-widest font-medium">Our Signature Selection</span>
-      <h2 id="popular-title" class="font-serif text-4xl md:text-5xl mt-4 gold-text">PANEER</h2>
-      <div class="w-24 h-px mx-auto mt-6 gold-gradient"></div>
-     </div>
-     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"><!-- Dish Card 1 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in">
-       <div class="image-zoom h-48 relative"><img src="matarpaneer.jpeg" alt="Wagyu Beef Sliders" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#2d1f14';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-         Rs.230
+</head>
+<body class="h-full font-poppins" style="background-color: #0f0f0f; color: #e5e5e5;">
+  <div id="app" class="h-full overflow-auto">
+    
+    <!-- STICKY HEADER WITH DIRECT NAVIGATION -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 glassmorphism">
+      <div class="max-w-7xl mx-auto px-6 py-4">
+        <div class="flex items-center justify-between gap-8">
+          <!-- Logo -->
+          <a href="#" onclick="showMainPage()" class="flex items-center gap-3 flex-shrink-0">
+            <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center">
+              <span class="font-cinzel text-xl font-bold" style="color: #0f0f0f;">Z</span>
+            </div>
+            <span id="logo-text" class="font-cinzel text-2xl gold-text font-semibold hidden sm:inline">Zixy Bite</span>
+          </a>
+          
+          <!-- Desktop Navigation - All Links Visible -->
+          <nav class="flex items-center gap-6 lg:gap-8 flex-wrap">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#paneer" class="nav-link">Paneer</a>
+            <a href="#veg" class="nav-link">Veg Sabji</a>
+            <a href="#bread" class="nav-link">Bread</a>
+            <a href="#rice" class="nav-link">Rice</a>
+            <a href="#dal" class="nav-link">Dal</a>
+            <a href="#gallery" class="nav-link">Gallery</a>
+            <a href="#testimonials" class="nav-link">Reviews</a>
+            <a href="#contact" class="nav-link">Contact</a>
+          </nav>
         </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Mattar Paneer</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div><!-- Dish Card 2 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.1s;">
-       <div class="image-zoom h-48 relative"><img src="handipaneer.jpeg" alt="Lobster Mac &amp; Cheese" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#daa520';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-         Rs.240
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Kadhai Paneer</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div><!-- Dish Card 3 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.2s;">
-       <div class="image-zoom h-48 relative"><img src="kadhaipaneer.jpeg" alt="Beetroot &amp; Goat Cheese" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#8B0000';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-        Rs.239
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Handi Paneer</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div><!-- Dish Card 4 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.3s;">
-       <div class="image-zoom h-48 relative"><img src="specialhandi.jpeg" alt="Chocolate Lava Cake" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#3d2817';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-        Rs.299
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Special Handi Paneer</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
       </div>
-     </div>
-    </div>
-   </section>
-   
-    <section >
-    <div class="section-container">
-     <div class="text-center mb-16 fade-in"><span class="text-[#c8a95e] text-sm uppercase tracking-widest font-medium"></span>
-      <h2 id="popular-title" class="font-serif text-4xl md:text-5xl mt-4 gold-text"></h2>
-      <div class="w-24 h-px mx-auto mt-6 gold-gradient"></div>
-     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"><!-- Dish Card 1 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in">
-       <div class="image-zoom h-48 relative"><img src="paneertikka.jpeg" alt="Wagyu Beef Sliders" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#2d1f14';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-        Rs.249
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Paneer Tikka Masala</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div><!-- Dish Card 2 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.1s;">
-       <div class="image-zoom h-48 relative"><img src="paneertakatak.jpeg" alt="Lobster Mac &amp; Cheese" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#daa520';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-         Rs.229
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Panner Taka Tak</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div><!-- Dish Card 3 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.2s;">
-       <div class="image-zoom h-48 relative"><img src="paneerlababdar.jpeg" alt="Beetroot &amp; Goat Cheese" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#8B0000';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-         Rs.260
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Paneer Lababdar</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div><!-- Dish Card 4 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.3s;">
-       <div class="image-zoom h-48 relative"><img src="paneerkalimirch.jpeg" alt="Chocolate Lava Cake" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#3d2817';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-         Rs.230
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Paneer Kalimirch</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div>
-     </div>
-    </div>
-   </section><!-- Featured Menu Section -->
-   
-
-    <section >
-    <div class="section-container">
-     <div class="text-center mb-16 fade-in"><span class="text-[#c8a95e] text-sm uppercase tracking-widest font-medium"></span>
-      <h2 id="popular-title" class="font-serif text-4xl md:text-5xl mt-4 gold-text"></h2>
-      <div class="w-24 h-px mx-auto mt-6 gold-gradient"></div>
-     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"><!-- Dish Card 1 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in">
-       <div class="image-zoom h-48 relative"><img src="palakpaneer.jpeg" alt="Wagyu Beef Sliders" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#2d1f14';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-        Rs.270
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Palak Paneer</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div><!-- Dish Card 2 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.1s;">
-       <div class="image-zoom h-48 relative"><img src="paneerbegam.jpeg" alt="Lobster Mac &amp; Cheese" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#daa520';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-         Rs.270
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Paneer Begam Bahar</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div><!-- Dish Card 3 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.2s;">
-       <div class="image-zoom h-48 relative"><img src="paneerkaju.jpeg" alt="Beetroot &amp; Goat Cheese" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#8B0000';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-         Rs.280
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Paneer Kaju Korma</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div><!-- Dish Card 4 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.3s;">
-       <div class="image-zoom h-48 relative"><img src="paneerdopyaza.jpeg" alt="Chocolate Lava Cake" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#3d2817';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-         Rs.230
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Paneer Do Pyaza</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div>
-     </div>
-    </div>
-   </section>
-
-   
-    <section >
-    <div class="section-container">
-     <div class="text-center mb-16 fade-in"><span class="text-[#c8a95e] text-sm uppercase tracking-widest font-medium"></span>
-      <h2 id="popular-title" class="font-serif text-4xl md:text-5xl mt-4 gold-text"></h2>
-      <div class="w-24 h-px mx-auto mt-6 gold-gradient"></div>
-   
-     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"><!-- Dish Card 1 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in">
-       <div class="image-zoom h-48 relative"><img src="paneerbutter.jpeg" alt="Wagyu Beef Sliders" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#2d1f14';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-        Rs.290
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Paneer Butter Masala</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div><!-- Dish Card 2 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.1s;">
-       <div class="image-zoom h-48 relative"><img src="shahi.jpeg" alt="Lobster Mac &amp; Cheese" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#daa520';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-         Rs.260
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Shahi Panner</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
-      </div><!-- Dish Card 3 -->
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in" style="transition-delay: 0.2s;">
-       <div class="image-zoom h-48 relative"><img src="chillipaneer.jpeg" alt="Beetroot &amp; Goat Cheese" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#8B0000';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">
-         Rs.230
-        </div>
-       </div>
-       <div class="p-6">
-        <div class="flex mb-2">
-         <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <h3 class="font-serif text-xl text-white mb-2">Chilli Paneer</h3>
-        <p class="text-gray-400 text-sm leading-relaxed"></p>
-       </div>
+    </header>
+    
+    <!-- MAIN PAGE -->
+    <div id="main-page" class="page-transition">
       
-      </div>
-     </div>
+      <!-- HERO SECTION -->
+      <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1920&h=1080&fit=crop" alt="Hero Background" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #2a2015, #0f0f0f)'"/>
+        </div>
+        
+        <!-- Golden Light Streak -->
+        <div class="light-streak"></div>
+        <div class="light-streak" style="right: 25%; animation-delay: 1s;"></div>
+        
+        <!-- Overlay -->
+        <div class="absolute inset-0 hero-overlay"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+          <div class="mb-8 flex justify-center gap-6 items-center">
+            <div class="flex-1 h-px bg-gradient-to-r from-transparent to-yellow-600" style="max-width: 100px;"></div>
+            <span class="text-2xl" style="color: #c8a95e;">✦</span>
+            <div class="flex-1 h-px bg-gradient-to-l from-transparent to-yellow-600" style="max-width: 100px;"></div>
+          </div>
+          
+          <h1 id="hero-headline" class="font-playfair text-5xl md:text-7xl font-bold mb-6 gold-text leading-tight">
+            ZIXY BITE RESTURANT
+          </h1>
+          
+          <p id="hero-subheading" class="font-poppins text-lg md:text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+            A journey of flavor, artistry, and refined ambiance crafted for the discerning palate.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-6 justify-center">
+            <button class="btn-primary font-poppins px-10 py-4 rounded-full text-lg font-semibold tracking-wider">
+              Scroll down or click on quick links to Explore
+            </button>
+            <a href="#paneer" class="btn-outline font-poppins px-10 py-4 rounded-full text-lg font-semibold tracking-wider">
+              Explore Menu
+            </a>
+          </div>
+        </div>
+      </section>
+      
+      <!-- PANEER SECTION -->
+      <section id="paneer" class="py-16 px-15">
+        <div class="max-w-7xl mx-auto">
+          <div class="category-header">
+            <h2 class="category-title gold-text">PANEER</h2>
+            <p class="category-subtitle">Cottage Cheese Delicacies</p>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Matar Paneer -->
+            <div class="dish-card" onclick="showDishPage('matar-paneer', 'Matar Paneer', '230', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/matarpaneer.jpeg" alt="Matar Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Matar Paneer</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹230</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Kadhai Paneer -->
+            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/handipaneer.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Kadhai Paneer</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Paneer Tikka Masala -->
+            <div class="dish-card" onclick="showDishPage('paneer-tikka-masala', 'Paneer Tikka Masala', '249', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/kadhaipaneer.jpeg" alt="Paneer Tikka Masala" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Handi Paneer</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Palak Paneer -->
+            <div class="dish-card" onclick="showDishPage('palak-paneer', 'Palak Paneer', '270', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/specialhandi.jpeg" alt="Palak Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Special Handi Paneer</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹270</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Paneer Butter Masala -->
+            <div class="dish-card" onclick="showDishPage('paneer-butter-masala', 'Paneer Butter Masala', '290', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/paneertikka.jpeg" alt="Paneer Butter Masala" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Tikka Masala</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹290</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Shahi Paneer -->
+            <div class="dish-card" onclick="showDishPage('shahi-paneer', 'Shahi Paneer', '260', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/paneertakatak.jpeg" alt="Shahi Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Taka Tak</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹260</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+<!-- Kadhai Paneer -->
+            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerlababdar.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Lababdar</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Kadhai Paneer -->
+            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerkalimirch.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Kalimirch</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Kadhai Paneer -->
+            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/palakpaneer.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Palak Paneer</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kadhai Paneer -->
+            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerbegam.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Begam Bahar</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kadhai Paneer -->
+            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerkaju.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Kaju Korma</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kadhai Paneer -->
+            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerdopyaza.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer do pyaza</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kadhai Paneer -->
+            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerbutter.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer butter masala</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kadhai Paneer -->
+            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/shahi.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Shahi Paneer</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kadhai Paneer -->
+            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
+              <img src="https://ik.imagekit.io/hyi9kn2fq/chillipaneer.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Chilli Paneer</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+      </section>
+      
+      <div class="section-divider max-w-5xl mx-auto"></div>
+      
+      <!-- VEG SABJI SECTION -->
+      <section id="veg" class="py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+          <div class="category-header">
+            <h2 class="category-title gold-text">VEG SABJI</h2>
+            <p class="category-subtitle">Garden Fresh Vegetables</p>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Aloo Masala -->
+            <div class="dish-card" onclick="showDishPage('aloo-masala', 'Aloo Masala', '129', 'veg')">
+              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Aloo Masala" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Aloo Masala</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹129</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Chana Masala -->
+            <div class="dish-card" onclick="showDishPage('chana-masala', 'Chana Masala', '190', 'veg')">
+              <img src="https://images.unsplash.com/photo-1565557623814-695d8d1ce342?w=500&h=300&fit=crop" alt="Chana Masala" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Chana Masala</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹190</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Mushroom Masala -->
+            <div class="dish-card" onclick="showDishPage('mushroom-masala', 'Mushroom Masala', '249', 'veg')">
+              <img src="https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=500&h=300&fit=crop" alt="Mushroom Masala" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Mushroom Masala</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹249</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Dum Aloo -->
+            <div class="dish-card" onclick="showDishPage('dum-aloo', 'Dum Aloo', '190', 'veg')">
+              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dum Aloo" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Dum Aloo</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹190</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Mix Veg -->
+            <div class="dish-card" onclick="showDishPage('mix-veg', 'Mix Veg', '170', 'veg')">
+              <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=300&fit=crop" alt="Mix Veg" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Mix Veg</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹170</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Banarasi Dum Aloo -->
+            <div class="dish-card" onclick="showDishPage('banarasi-dum-aloo', 'Banarasi Dum Aloo', '210', 'veg')">
+              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Banarasi Dum Aloo" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Banarasi Dum Aloo</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹210</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <div class="section-divider max-w-5xl mx-auto"></div>
+      
+      <!-- BREAD SECTION -->
+      <section id="bread" class="py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+          <div class="category-header">
+            <h2 class="category-title gold-text">BREAD</h2>
+            <p class="category-subtitle">Tandoor Fresh Breads</p>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Tandoori Roti -->
+            <div class="dish-card" onclick="showDishPage('tandoori-roti', 'Tandoori Roti', '15', 'bread')">
+              <img src="https://images.unsplash.com/photo-1585521537190-6ba64e3c37ae?w=500&h=300&fit=crop" alt="Tandoori Roti" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Tandoori Roti</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹15</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Butter Naan -->
+            <div class="dish-card" onclick="showDishPage('butter-naan', 'Butter Naan', '45', 'bread')">
+              <img src="https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=500&h=300&fit=crop" alt="Butter Naan" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Butter Naan</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹45</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Laccha Paratha -->
+            <div class="dish-card" onclick="showDishPage('laccha-paratha', 'Laccha Paratha', '49', 'bread')">
+              <img src="https://images.unsplash.com/photo-1585078519514-1f67b2e4fee5?w=500&h=300&fit=crop" alt="Laccha Paratha" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Laccha Paratha</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹49</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Stuff Garlic Naan -->
+            <div class="dish-card" onclick="showDishPage('stuff-garlic-naan', 'Stuff Garlic Naan', '55', 'bread')">
+              <img src="https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=500&h=300&fit=crop" alt="Stuff Garlic Naan" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Stuff Garlic Naan</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹55</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Paneer Stuff Naan -->
+            <div class="dish-card" onclick="showDishPage('paneer-stuff-naan', 'Paneer Stuff Naan', '70', 'bread')">
+              <img src="https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=500&h=300&fit=crop" alt="Paneer Stuff Naan" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Stuff Naan</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹70</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Aalu Stuff Naan -->
+            <div class="dish-card" onclick="showDishPage('aalu-stuff-naan', 'Aalu Stuff Naan', '55', 'bread')">
+              <img src="https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=500&h=300&fit=crop" alt="Aalu Stuff Naan" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Aalu Stuff Naan</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹55</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <div class="section-divider max-w-5xl mx-auto"></div>
+      
+      <!-- RICE SECTION -->
+      <section id="rice" class="py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+          <div class="category-header">
+            <h2 class="category-title gold-text">RICE</h2>
+            <p class="category-subtitle">Aromatic Rice Preparations</p>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Veg Fried Rice -->
+            <div class="dish-card" onclick="showDishPage('veg-fried-rice', 'Veg Fried Rice', '129', 'rice')">
+              <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=500&h=300&fit=crop" alt="Veg Fried Rice" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Veg Fried Rice</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹129</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Paneer Fried Rice -->
+            <div class="dish-card" onclick="showDishPage('paneer-fried-rice', 'Paneer Fried Rice', '149', 'rice')">
+              <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=500&h=300&fit=crop" alt="Paneer Fried Rice" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Fried Rice</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹149</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Schezwan Fried Rice -->
+            <div class="dish-card" onclick="showDishPage('schezwan-fried-rice', 'Schezwan Fried Rice', '190', 'rice')">
+              <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=500&h=300&fit=crop" alt="Schezwan Fried Rice" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Schezwan Fried Rice</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹190</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Jeera Rice -->
+            <div class="dish-card" onclick="showDishPage('jeera-rice', 'Jeera Rice', '120', 'rice')">
+              <img src="https://images.unsplash.com/photo-1596072200969-2deda1bbbag?w=500&h=300&fit=crop" alt="Jeera Rice" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Jeera Rice</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹120</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Mutter Pulao -->
+            <div class="dish-card" onclick="showDishPage('mutter-pulao', 'Mutter Pulao', '135', 'rice')">
+              <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=500&h=300&fit=crop" alt="Mutter Pulao" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Mutter Pulao</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹135</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Lemon Rice -->
+            <div class="dish-card" onclick="showDishPage('lemon-rice', 'Lemon Rice', '120', 'rice')">
+              <img src="https://images.unsplash.com/photo-1596072200969-2deda1bbbag?w=500&h=300&fit=crop" alt="Lemon Rice" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Lemon Rice</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹120</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <div class="section-divider max-w-5xl mx-auto"></div>
+      
+      <!-- DAL SECTION -->
+      <section id="dal" class="py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+          <div class="category-header">
+            <h2 class="category-title gold-text">DAL</h2>
+            <p class="category-subtitle">Traditional Lentil Curries</p>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Dal Fry -->
+            <div class="dish-card" onclick="showDishPage('dal-fry', 'Dal Fry', '130', 'dal')">
+              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dal Fry" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Dal Fry</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹130</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Dal Tadka -->
+            <div class="dish-card" onclick="showDishPage('dal-tadka', 'Dal Tadka', '139', 'dal')">
+              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dal Tadka" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Dal Tadka</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹139</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Dal Handi -->
+            <div class="dish-card" onclick="showDishPage('dal-handi', 'Dal Handi', '149', 'dal')">
+              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dal Handi" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Dal Handi</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹149</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Dal Makhani -->
+            <div class="dish-card" onclick="showDishPage('dal-makhani', 'Dal Makhani', '170', 'dal')">
+              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dal Makhani" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Dal Makhani</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹170</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Dal Bukhara -->
+            <div class="dish-card" onclick="showDishPage('dal-bukhara', 'Dal Bukhara', '145', 'dal')">
+              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dal Bukhara" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
+              <div class="p-4">
+                <h3 class="font-playfair text-lg font-semibold mb-2">Dal Bukhara</h3>
+                <div class="flex justify-between items-center">
+                  <span class="price-badge">₹145</span>
+                  <div class="star-rating">★★★★★</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <div class="section-divider max-w-5xl mx-auto"></div>
+      
+      <!-- GALLERY SECTION -->
+      <section id="gallery" class="py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+          <div class="category-header">
+            <h2 class="category-title gold-text">GALLERY</h2>
+            <p class="category-subtitle">Our Elegant Ambiance</p>
+          </div>
+          
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+            <!-- Gallery Image 1 -->
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1517457373614-b7152f800fd1?w=400&h=400&fit=crop" alt="Restaurant Interior" loading="lazy" onerror="this.style.background='#2a1f15'"/>
+            </div>
+            
+            <!-- Gallery Image 2 -->
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1555939594-58d7cb561fc1?w=400&h=400&fit=crop" alt="Fine Dining" loading="lazy" onerror="this.style.background='#2a1f15'"/>
+            </div>
+            
+            <!-- Gallery Image 3 -->
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=400&h=400&fit=crop" alt="Plated Food" loading="lazy" onerror="this.style.background='#2a1f15'"/>
+            </div>
+            
+            <!-- Gallery Image 4 -->
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop" alt="Chef Presentation" loading="lazy" onerror="this.style.background='#2a1f15'"/>
+            </div>
+            
+            <!-- Gallery Image 5 -->
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1504674900967-74f0bf42b59e?w=400&h=400&fit=crop" alt="Elegant Table" loading="lazy" onerror="this.style.background='#2a1f15'"/>
+            </div>
+            
+            <!-- Gallery Image 6 -->
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1495195134817-aeb325b55b65?w=400&h=400&fit=crop" alt="Gourmet Dish" loading="lazy" onerror="this.style.background='#2a1f15'"/>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <div class="section-divider max-w-5xl mx-auto"></div>
+      
+      <!-- TESTIMONIALS SECTION -->
+      <section id="testimonials" class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+          <div class="category-header">
+            <h2 class="category-title gold-text">TESTIMONIALS</h2>
+            <p class="category-subtitle">What Our Guests Say</p>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+              <p class="font-playfair text-gray-300 italic text-lg leading-relaxed mb-6 relative z-10">"An extraordinary dining experience. Every dish was a masterpiece, and the ambiance transported us to another world of elegance."</p>
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 gold-gradient rounded-full flex items-center justify-center">
+                  <span class="font-cinzel text-xl font-bold" style="color: #0f0f0f;">AR</span>
+                </div>
+                <div>
+                  <h4 class="font-poppins font-semibold gold-text">Aisha Rahman</h4>
+                  <p class="font-poppins text-gray-500 text-sm">Food Critic</p>
+                </div>
+              </div>
+              <div class="star-rating mt-4">★★★★★</div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+              <p class="font-playfair text-gray-300 italic text-lg leading-relaxed mb-6 relative z-10">"The chef's specials are truly exceptional. We celebrated our anniversary here and it exceeded all expectations."</p>
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 gold-gradient rounded-full flex items-center justify-center">
+                  <span class="font-cinzel text-xl font-bold" style="color: #0f0f0f;">MS</span>
+                </div>
+                <div>
+                  <h4 class="font-poppins font-semibold gold-text">Michael Sterling</h4>
+                  <p class="font-poppins text-gray-500 text-sm">Regular Guest</p>
+                </div>
+              </div>
+              <div class="star-rating mt-4">★★★★★</div>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+              <p class="font-playfair text-gray-300 italic text-lg leading-relaxed mb-6 relative z-10">"From the paneer dishes to the dal makhani, every authentic flavor was perfectly balanced. A culinary journey worth repeating."</p>
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 gold-gradient rounded-full flex items-center justify-center">
+                  <span class="font-cinzel text-xl font-bold" style="color: #0f0f0f;">PK</span>
+                </div>
+                <div>
+                  <h4 class="font-poppins font-semibold gold-text">Priya Kapoor</h4>
+                  <p class="font-poppins text-gray-500 text-sm">Culinary Blogger</p>
+                </div>
+              </div>
+              <div class="star-rating mt-4">★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <div class="section-divider max-w-5xl mx-auto"></div>
+      
+      <!-- CONTACT SECTION -->
+      <section id="contact" class="py-16 px-6">
+        <div class="max-w-4xl mx-auto">
+          <div class="category-header">
+            <h2 class="category-title gold-text">CONTACT US</h2>
+            <p class="category-subtitle">We'd Love to Hear From You</p>
+          </div>
+          
+          <div class="glassmorphism-light rounded-2xl p-8 md:p-12">
+            <div class="grid md:grid-cols-2 gap-12">
+              <div>
+                <h3 class="font-cinzel text-2xl gold-text mb-6">Get in Touch</h3>
+                <div class="space-y-6">
+                  <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center flex-shrink-0">
+                      <span class="text-xl">📞</span>
+                    </div>
+                    <div>
+                      <h4 class="font-poppins font-semibold text-white mb-1">Phone</h4>
+                      <p id="contact-phone" class="font-poppins text-gray-400">+1 (555) 123-4567</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center flex-shrink-0">
+                      <span class="text-xl">✉️</span>
+                    </div>
+                    <div>
+                      <h4 class="font-poppins font-semibold text-white mb-1">Email</h4>
+                      <p id="contact-email" class="font-poppins text-gray-400">reservations@maisondoree.com</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center flex-shrink-0">
+                      <span class="text-xl">📍</span>
+                    </div>
+                    <div>
+                      <h4 class="font-poppins font-semibold text-white mb-1">Address</h4>
+                      <p id="contact-address" class="font-poppins text-gray-400">123 Gourmet Street<br>Culinary District, CD 10001</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="font-cinzel text-2xl gold-text mb-6">Opening Hours</h3>
+                <div class="space-y-4">
+                  <div class="flex justify-between border-b border-gray-800 pb-3">
+                    <span class="font-poppins text-gray-300">Monday - Thursday</span>
+                    <span class="font-poppins gold-text">5:00 PM - 10:00 PM</span>
+                  </div>
+                  <div class="flex justify-between border-b border-gray-800 pb-3">
+                    <span class="font-poppins text-gray-300">Friday - Saturday</span>
+                    <span class="font-poppins gold-text">5:00 PM - 11:00 PM</span>
+                  </div>
+                  <div class="flex justify-between border-b border-gray-800 pb-3">
+                    <span class="font-poppins text-gray-300">Sunday</span>
+                    <span class="font-poppins gold-text">4:00 PM - 9:00 PM</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="font-poppins text-gray-300">Brunch (Sat-Sun)</span>
+                    <span class="font-poppins gold-text">11:00 AM - 3:00 PM</span>
+                  </div>
+                </div>
+                
+                <button class="btn-primary w-full mt-8 py-4 rounded-full font-poppins font-semibold tracking-wider">
+                  Make a Reservation
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- FOOTER -->
+      <footer class="py-12 px-6 border-t" style="border-color: rgba(200, 169, 94, 0.2);">
+        <div class="max-w-6xl mx-auto">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center">
+                <span class="font-cinzel text-lg font-bold" style="color: #0f0f0f;">M</span>
+              </div>
+              <span id="footer-logo" class="font-cinzel text-xl gold-text"> Zixy Bite</span>
+            </div>
+            <p class="font-poppins text-gray-500 text-sm">© 2024 Zixy Bite. All rights reserved.</p>
+            <div class="flex gap-6">
+              <a href="#" class="font-poppins text-gray-400 hover:text-yellow-500 transition-colors text-sm">Privacy Policy</a>
+              <a href="#" class="font-poppins text-gray-400 hover:text-yellow-500 transition-colors text-sm">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-   </section>
-
-
-
-
-
-   
-   <!-- Featured Menu Section -->
-   <section class="py-24 px-4" style="background: linear-gradient(180deg, #0f0f0f 0%, #151515 50%, #0f0f0f 100%);">
-    <div class="section-container">
-     <div class="text-center mb-16 fade-in"><span class="text-[#c8a95e] text-sm uppercase tracking-widest font-medium">Curated Selections</span>
-      <h2 id="featured-title" class="font-serif text-4xl md:text-5xl mt-4 https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&amp;h=900&amp;fit=cropgold-text">Featured Menu</h2>
-      <div class="w-24 h-px mx-auto mt-6 gold-gradient"></div>
-     </div>
-     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in group">
-       <div class="image-zoom h-64 relative"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&amp;h=900&amp;fit=crop" alt="Pan-Seared Scallops" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#daa520';">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-        <div class="absolute bottom-4 left-4 right-4">
-         <span class="price-badge px-4 py-2 rounded-full text-sm font-bold">$38</span>
+    
+    <!-- DISH DETAIL PAGE -->
+    <div id="dish-page" class="hidden-page page-transition pt-24 pb-16 px-6">
+      <div class="max-w-4xl mx-auto">
+        <button onclick="showMainPage()" class="btn-outline px-6 py-3 rounded-full font-poppins text-sm mb-8 inline-flex items-center gap-2">
+          <span>←</span> Back to Menu
+        </button>
+        
+        <div class="glassmorphism-light rounded-2xl overflow-hidden gold-glow">
+          <!-- Dish Image -->
+          <img id="dish-detail-image" src="https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=800&h=400&fit=crop" alt="Dish" loading="lazy" class="w-full h-96 object-cover" onerror="this.style.background='#2a1f15'"/>
+          
+          <div class="p-8 md:p-12">
+            <div class="text-center mb-8">
+              <h1 id="dish-title" class="font-playfair text-4xl md:text-5xl font-bold gold-text mb-4">Dish Name</h1>
+              <span id="dish-price" class="price-badge text-xl">₹230</span>
+            </div>
+            
+            <div class="max-w-2xl mx-auto">
+              <p id="dish-description" class="font-playfair text-gray-300 text-lg leading-relaxed text-center mb-8 italic">
+                A beautifully crafted dish featuring the finest ingredients, prepared with traditional techniques and modern presentation.
+              </p>
+              
+              <div class="glassmorphism rounded-2xl p-6 mb-8">
+                <h3 class="font-cinzel text-xl gold-text mb-4 text-center">Ingredients</h3>
+                <p id="dish-ingredients" class="font-poppins text-gray-400 text-center leading-relaxed">
+                  Premium cottage cheese, aromatic spices, fresh cream, tomatoes, onions, ginger-garlic paste, kasuri methi.
+                </p>
+              </div>
+              
+              <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="addToOrder()" class="btn-primary px-10 py-4 rounded-full font-poppins font-semibold tracking-wider">
+                  Add to Order
+                </button>
+                <button onclick="showMainPage()" class="btn-outline px-10 py-4 rounded-full font-poppins font-semibold tracking-wider">
+                  Back to Menu
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-       </div>
-       <div class="p-6">
-        <h3 class="font-serif text-2xl text-white mb-3 group-hover:text-[#c8a95e] transition-colors">Pan-Seared Scallops</h3>
-        <p class="text-gray-400 leading-relaxed">Diver scallops with saffron-infused risotto, citrus beurre blanc</p>
-       </div>
       </div>
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in group" style="transition-delay: 0.15s;">
-       <div class="image-zoom h-64 relative"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&amp;h=900&amp;fit=crop" alt="Truffle Wild Mushroom Pasta" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#d4a574';">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-        <div class="absolute bottom-4 left-4 right-4">
-         <span class="price-badge px-4 py-2 rounded-full text-sm font-bold">$26</span>
-        </div>
-       </div>
-       <div class="p-6">
-        <h3 class="font-serif text-2xl text-white mb-3 group-hover:text-[#c8a95e] transition-colors">Truffle Wild Mushroom</h3>
-        <p class="text-gray-400 leading-relaxed">House-made tagliatelle, black truffle shavings, forest mushroom</p>
-       </div>
-      </div>
-      <div class="glass-card gold-border rounded-3xl overflow-hidden card-hover fade-in group" style="transition-delay: 0.3s;">
-       <div class="image-zoom h-64 relative"><img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=500&amp;h=350&amp;fit=crop" alt="Braised Lamb Shank" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#654321';">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-        <div class="absolute bottom-4 left-4 right-4">
-         <span class="price-badge px-4 py-2 rounded-full text-sm font-bold">$42</span>
-        </div>
-       </div>
-       <div class="p-6">
-        <h3 class="font-serif text-2xl text-white mb-3 group-hover:text-[#c8a95e] transition-colors">Braised Lamb Shank</h3>
-        <p class="text-gray-400 leading-relaxed">12-hour slow-braised lamb, roasted root vegetables, red wine</p>
-       </div>
-      </div>
-      <div class="glass-card gold-border rounded-2xl overflow-hidden card-hover fade-in">
-       <div class="image-zoom h-40 relative">
-        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop" alt="Kheera Salad" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='#90EE90';">
-        <div class="absolute top-3 right-3 price-badge px-3 py-1 rounded-full text-sm font-semibold">₹40</div>
-       </div>
-       <div class="p-4">
-        <h3 class="font-serif text-lg text-white">Kheera Salad</h3>
-       </div>
-      </div>
-     </div>
     </div>
-   </section><!-- Testimonials Section -->
-   <section class="py-24 px-4" style="background: #0f0f0f;">
-    <div class="section-container">
-     <div class="text-center mb-16 fade-in"><span class="text-[#c8a95e] text-sm uppercase tracking-widest font-medium">What Our Guests Say</span>
-      <h2 id="testimonials-title" class="font-serif text-4xl md:text-5xl mt-4 gold-text">Guest Experiences</h2>
-      <div class="w-24 h-px mx-auto mt-6 gold-gradient"></div>
-     </div>
-     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="glass-card gold-border rounded-3xl p-8 card-hover fade-in">
-       <div class="quote-mark font-serif">
-        "
-       </div>
-       <p class="text-gray-300 text-lg leading-relaxed mb-6 italic">An extraordinary culinary journey. Every dish was a masterpiece, and the ambiance transported us to another world.</p>
-       <div class="flex items-center">
-        <div class="w-14 h-14 rounded-full gold-gradient flex items-center justify-center text-xl font-bold text-[#0f0f0f]">
-         VM
-        </div>
-        <div class="ml-4">
-         <p class="font-semibold text-white">Vimlesh </p>
-         <p class="text-[#c8a95e] text-sm">barabanki</p>
-        </div>
-       </div>
-      </div>
-      <div class="glass-card gold-border rounded-3xl p-8 card-hover fade-in" style="transition-delay: 0.15s;">
-       <div class="quote-mark font-serif">
-        "
-       </div>
-       <p class="text-gray-300 text-lg leading-relaxed mb-6 italic">The Wagyu was absolutely divine. This restaurant sets a new standard for fine dining excellence.</p>
-       <div class="flex items-center">
-        <div class="w-14 h-14 rounded-full gold-gradient flex items-center justify-center text-xl font-bold text-[#0f0f0f]">
-         HM
-        </div>
-        <div class="ml-4">
-         <p class="font-semibold text-white">Himanshu</p>
-         <p class="text-[#c8a95e] text-sm">Executive Chef</p>
-        </div>
-       </div>
-      </div>
-      <div class="glass-card gold-border rounded-3xl p-8 card-hover fade-in" style="transition-delay: 0.3s;">
-       <div class="quote-mark font-serif">
-        "
-       </div>
-       <p class="text-gray-300 text-lg leading-relaxed mb-6 italic">Perfect for our anniversary. The attention to detail and impeccable service made it truly unforgettable.</p>
-       <div class="flex items-center">
-        <div class="w-14 h-14 rounded-full gold-gradient flex items-center justify-center text-xl font-bold text-[#0f0f0f]">
-         RH
-        </div>
-        <div class="ml-4">
-         <p class="font-semibold text-white">Rohit</p>
-         <p class="text-[#c8a95e] text-sm">Verified Guest</p>
-        </div>
-       </div>
-      </div>
-     </div>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 glassmorphism px-8 py-4 rounded-full gold-glow opacity-0 transition-all duration-300 pointer-events-none z-50">
+      <p class="font-poppins gold-text font-semibold">Added to your order!</p>
     </div>
-   </section><!-- Footer -->
-   <footer class="py-16 px-4" style="background: #0a0a0a;">
-    <div class="section-container">
-     <div class="divider mb-12"></div>
-     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-      <div class="text-center md:text-left">
-       <h3 class="font-serif text-3xl gold-text mb-4">Zixy Bite Resturant</h3>
-       <p class="text-gray-400 leading-relaxed">Where culinary artistry meets refined elegance. An unforgettable dining experience awaits.</p>
-      </div>
-      <div class="text-center">
-       <h4 class="text-[#c8a95e] uppercase tracking-widest text-sm mb-4">Contact Us</h4>
-       <p id="footer-address" class="text-gray-300 mb-2">Muneshwar vihar colony</p>
-       <p id="footer-phone" class="text-gray-300 mb-4">+91 6386754482</p>
-      </div>
-      <div class="text-center md:text-right">
-       <h4 class="text-[#c8a95e] uppercase tracking-widest text-sm mb-4">Hours</h4>
-       <p class="text-gray-300">Tuesday - Sunday</p>
-       <p class="text-gray-400 text-sm mb-2">9:00 PM - 11:00 PM</p>
-       <p class="text-gray-300">Closed Monday</p>
-      </div>
-     </div>
-     <div class="divider mb-8"></div>
-     <p class="text-center text-gray-500 text-sm font-light tracking-wider">© 2024Zixy Bite Resturant. All Rights Reserved.</p>
-    </div>
-   </footer>
+  </div>
+  
   <script>
+    // Default configuration
     const defaultConfig = {
-      hero_headline: 'ZIXY BITE RESTURANT',
+      restaurant_name: ' Zixy Bite',
+      hero_headline: 'Experience Culinary Excellence',
       hero_subheading: 'A journey of flavor, artistry, and refined ambiance crafted for the discerning palate.',
-      button_explore: 'Explore Menu',
-      popular_title: 'Popular Dishes',
-      featured_title: 'Featured Menu',
-      testimonials_title: 'Guest Experiences',
-      restaurant_address: '123 Elegance Avenue, Manhattan',
-      restaurant_phone: '+1 (212) 555-0123',
+      phone_number: '+1 (555) 123-4567',
+      email_address: 'reservations@maisondoree.com',
+      address: '123 Gourmet Street\nCulinary District, CD 10001',
+      primary_color: '#c8a95e',
+      secondary_color: '#f5d27a',
       background_color: '#0f0f0f',
-      gold_accent: '#c8a95e',
-      text_color: '#ffffff',
-      card_color: '#1a1a1a',
-      secondary_text: '#a0a0a0',
-      font_family: 'Montserrat',
-      font_size: 16,
-      maps_link: 'https://share.google/9tNweDuavZ5V9igRn'
+      text_color: '#e5e5e5',
+      surface_color: '#1a1a1a',
+      font_family: 'Playfair Display',
+      font_size: 16
     };
-
-    async function onConfigChange(config) {
-      document.getElementById('hero-headline').textContent = config.hero_headline || defaultConfig.hero_headline;
-      document.getElementById('hero-subheading').textContent = config.hero_subheading || defaultConfig.hero_subheading;
-      document.getElementById('btn-explore').textContent = config.button_explore || defaultConfig.button_explore;
-      
-      document.getElementById('popular-title').textContent = config.popular_title || defaultConfig.popular_title;
-      document.getElementById('featured-title').textContent = config.featured_title || defaultConfig.featured_title;
-      document.getElementById('testimonials-title').textContent = config.testimonials_title || defaultConfig.testimonials_title;
-      
-      document.getElementById('footer-address').textContent = config.restaurant_address || defaultConfig.restaurant_address;
-      document.getElementById('footer-phone').textContent = config.restaurant_phone || defaultConfig.restaurant_phone;
-      
-      const bgColor = config.background_color || defaultConfig.background_color;
-      const goldAccent = config.gold_accent || defaultConfig.gold_accent;
-      const textColor = config.text_color || defaultConfig.text_color;
-      const cardColor = config.card_color || defaultConfig.card_color;
-      const secondaryText = config.secondary_text || defaultConfig.secondary_text;
-      
-      document.documentElement.style.setProperty('--bg-dark', bgColor);
-      document.documentElement.style.setProperty('--gold-start', goldAccent);
-      document.documentElement.style.setProperty('--text-primary', textColor);
-      document.documentElement.style.setProperty('--bg-card', cardColor);
-      document.documentElement.style.setProperty('--text-secondary', secondaryText);
-      
-      const fontFamily = config.font_family || defaultConfig.font_family;
-      const fontSize = config.font_size || defaultConfig.font_size;
-      document.body.style.fontFamily = `${fontFamily}, sans-serif`;
-      document.body.style.fontSize = `${fontSize}px`;
-    }
-
-    function mapToCapabilities(config) {
-      return {
-        recolorables: [
-          {
-            get: () => config.background_color || defaultConfig.background_color,
-            set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
-          },
-          {
-            get: () => config.card_color || defaultConfig.card_color,
-            set: (value) => { config.card_color = value; window.elementSdk.setConfig({ card_color: value }); }
-          },
-          {
-            get: () => config.text_color || defaultConfig.text_color,
-            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
-          },
-          {
-            get: () => config.gold_accent || defaultConfig.gold_accent,
-            set: (value) => { config.gold_accent = value; window.elementSdk.setConfig({ gold_accent: value }); }
-          },
-          {
-            get: () => config.secondary_text || defaultConfig.secondary_text,
-            set: (value) => { config.secondary_text = value; window.elementSdk.setConfig({ secondary_text: value }); }
-          }
-        ],
-        borderables: [],
-        fontEditable: {
-          get: () => config.font_family || defaultConfig.font_family,
-          set: (value) => { config.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
-        },
-        fontSizeable: {
-          get: () => config.font_size || defaultConfig.font_size,
-          set: (value) => { config.font_size = value; window.elementSdk.setConfig({ font_size: value }); }
-        }
-      };
-    }
-
-    function mapToEditPanelValues(config) {
-      return new Map([
-        ['hero_headline', config.hero_headline || defaultConfig.hero_headline],
-        ['hero_subheading', config.hero_subheading || defaultConfig.hero_subheading],
-        ['button_explore', config.button_explore || defaultConfig.button_explore],
-        ['popular_title', config.popular_title || defaultConfig.popular_title],
-        ['featured_title', config.featured_title || defaultConfig.featured_title],
-        ['testimonials_title', config.testimonials_title || defaultConfig.testimonials_title],
-        ['restaurant_address', config.restaurant_address || defaultConfig.restaurant_address],
-        ['restaurant_phone', config.restaurant_phone || defaultConfig.restaurant_phone],
-        ['maps_link', config.maps_link || defaultConfig.maps_link]
-      ]);
-    }
-
+    
+    // Dish data with images
+    const dishData = {
+      'matar-paneer': {
+        name: 'Matar Paneer',
+        price: '230',
+        image: 'https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=800&h=400&fit=crop',
+        description: 'A classic North Indian delicacy featuring soft paneer cubes simmered in a rich, aromatic tomato-based gravy with tender green peas.',
+        ingredients: 'Fresh cottage cheese, green peas, tomatoes, onions, ginger-garlic paste, cream, kasuri methi, garam masala, turmeric, red chili powder'
+      },
+      'kadhai-paneer': {
+        name: 'Kadhai Paneer',
+        price: '249',
+        image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&h=400&fit=crop',
+        description: 'A flavorful dish of paneer cubes cooked with bell peppers and onions in a spicy kadhai masala, served sizzling hot.',
+        ingredients: 'Cottage cheese, bell peppers, onions, tomatoes, kadhai masala, coriander seeds, dried red chilies, ginger, garlic'
+      },
+      'paneer-tikka-masala': {
+        name: 'Paneer Tikka Masala',
+        price: '249',
+        image: 'https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=800&h=400&fit=crop',
+        description: 'Chargrilled paneer tikka pieces swimming in a luscious, smoky tomato-based curry with a hint of sweetness.',
+        ingredients: 'Marinated paneer tikka, tomatoes, cream, kasuri methi, honey, ginger, garlic, tikka masala spices'
+      },
+      'palak-paneer': {
+        name: 'Palak Paneer',
+        price: '270',
+        image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800&h=400&fit=crop',
+        description: 'A nutritious classic featuring paneer cubes nestled in a vibrant, silky spinach puree with subtle spicing.',
+        ingredients: 'Fresh spinach, paneer, cream, garlic, ginger, cumin, green chilies, garam masala, kasuri methi'
+      },
+      'paneer-butter-masala': {
+        name: 'Paneer Butter Masala',
+        price: '290',
+        image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&h=400&fit=crop',
+        description: 'The quintessential crowd-pleaser - paneer in a rich, buttery tomato gravy that\'s creamy, slightly sweet, and absolutely divine.',
+        ingredients: 'Paneer, butter, tomatoes, cream, kasuri methi, honey, ginger-garlic paste, garam masala'
+      },
+      'shahi-paneer': {
+        name: 'Shahi Paneer',
+        price: '260',
+        image: 'https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=800&h=400&fit=crop',
+        description: 'A truly royal dish - paneer pieces bathed in a rich, nutty gravy made with cream, cashews, and aromatic spices.',
+        ingredients: 'Paneer, cream, cashew paste, almond paste, saffron, rose water, cardamom, white pepper'
+      },
+      'aloo-masala': {
+        name: 'Aloo Masala',
+        price: '129',
+        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
+        description: 'Simple yet satisfying - tender potato cubes cooked with aromatic spices in a home-style preparation.',
+        ingredients: 'Potatoes, cumin, turmeric, coriander, red chili powder, amchur, curry leaves, mustard seeds'
+      },
+      'chana-masala': {
+        name: 'Chana Masala',
+        price: '190',
+        image: 'https://images.unsplash.com/photo-1565557623814-695d8d1ce342?w=800&h=400&fit=crop',
+        description: 'The iconic Punjabi chickpea curry - robust, tangy, and packed with bold spices.',
+        ingredients: 'Chickpeas, tomatoes, onions, chana masala, amchur, pomegranate seeds, ginger'
+      },
+      'mushroom-masala': {
+        name: 'Mushroom Masala',
+        price: '249',
+        image: 'https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=800&h=400&fit=crop',
+        description: 'Succulent mushrooms simmered in a rich, spiced gravy that highlights their natural umami flavor.',
+        ingredients: 'Mushrooms, tomatoes, cream, onions, kasuri methi, garam masala, paprika'
+      },
+      'dum-aloo': {
+        name: 'Dum Aloo',
+        price: '190',
+        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
+        description: 'Baby potatoes slow-cooked in a rich, aromatic gravy until they absorb all the delicious flavors.',
+        ingredients: 'Baby potatoes, yogurt, tomatoes, onion paste, cashew paste, garam masala, saffron'
+      },
+      'mix-veg': {
+        name: 'Mix Veg',
+        price: '170',
+        image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&h=400&fit=crop',
+        description: 'A colorful medley of seasonal vegetables cooked to perfection in a light, aromatic gravy.',
+        ingredients: 'Carrots, beans, peas, cauliflower, potatoes, tomatoes, onions, mixed spices'
+      },
+      'banarasi-dum-aloo': {
+        name: 'Banarasi Dum Aloo',
+        price: '210',
+        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
+        description: 'A Varanasi specialty featuring potatoes in a tangy, spiced yogurt gravy with a touch of sweetness.',
+        ingredients: 'Baby potatoes, yogurt, tomatoes, fennel, asafoetida, nigella seeds, sugar, tamarind'
+      },
+      'tandoori-roti': {
+        name: 'Tandoori Roti',
+        price: '15',
+        image: 'https://images.unsplash.com/photo-1585521537190-6ba64e3c37ae?w=800&h=400&fit=crop',
+        description: 'Classic whole wheat flatbread baked fresh in our traditional clay tandoor.',
+        ingredients: 'Whole wheat flour, water, salt'
+      },
+      'butter-naan': {
+        name: 'Butter Naan',
+        price: '45',
+        image: 'https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=800&h=400&fit=crop',
+        description: 'Our signature naan lavished with clarified butter and baked until golden.',
+        ingredients: 'Refined flour, butter, yeast, yogurt, milk, garlic butter topping'
+      },
+      'laccha-paratha': {
+        name: 'Laccha Paratha',
+        price: '49',
+        image: 'https://images.unsplash.com/photo-1585078519514-1f67b2e4fee5?w=800&h=400&fit=crop',
+        description: 'Multi-layered, flaky whole wheat flatbread with a buttery, crispy texture.',
+        ingredients: 'Wheat flour, ghee, oil, salt, water'
+      },
+      'stuff-garlic-naan': {
+        name: 'Stuff Garlic Naan',
+        price: '55',
+        image: 'https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=800&h=400&fit=crop',
+        description: 'Naan stuffed with aromatic roasted garlic and fresh herbs.',
+        ingredients: 'Refined flour, roasted garlic, herbs, butter, yeast, yogurt'
+      },
+      'paneer-stuff-naan': {
+        name: 'Paneer Stuff Naan',
+        price: '70',
+        image: 'https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=800&h=400&fit=crop',
+        description: 'Premium naan stuffed with spiced cottage cheese for a protein-rich treat.',
+        ingredients: 'Refined flour, crumbled paneer, onions, green chilies, spices, butter'
+      },
+      'aalu-stuff-naan': {
+        name: 'Aalu Stuff Naan',
+        price: '55',
+        image: 'https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=800&h=400&fit=crop',
+        description: 'Naan filled with spiced mashed potatoes - a satisfying meal in itself.',
+        ingredients: 'Refined flour, mashed potatoes, cumin, green chilies, coriander, butter'
+      },
+      'veg-fried-rice': {
+        name: 'Veg Fried Rice',
+        price: '129',
+        image: 'https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=800&h=400&fit=crop',
+        description: 'Wok-tossed rice with colorful vegetables and Asian aromatics.',
+        ingredients: 'Basmati rice, mixed vegetables, soy sauce, garlic, ginger, spring onions'
+      },
+      'paneer-fried-rice': {
+        name: 'Paneer Fried Rice',
+        price: '149',
+        image: 'https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=800&h=400&fit=crop',
+        description: 'Indo-Chinese fried rice elevated with crispy paneer cubes.',
+        ingredients: 'Basmati rice, paneer, vegetables, soy sauce, chili sauce, spring onions'
+      },
+      'schezwan-fried-rice': {
+        name: 'Schezwan Fried Rice',
+        price: '190',
+        image: 'https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=800&h=400&fit=crop',
+        description: 'Bold and spicy rice tossed with our house-made Schezwan sauce.',
+        ingredients: 'Basmati rice, Schezwan sauce, vegetables, garlic, spring onions, sesame oil'
+      },
+      'jeera-rice': {
+        name: 'Jeera Rice',
+        price: '120',
+        image: 'https://images.unsplash.com/photo-1596072200969-2deda1bbbcd0?w=800&h=400&fit=crop',
+        description: 'Aromatic basmati rice tempered with cumin seeds and ghee.',
+        ingredients: 'Basmati rice, cumin seeds, ghee, bay leaf, whole spices'
+      },
+      'mutter-pulao': {
+        name: 'Mutter Pulao',
+        price: '135',
+        image: 'https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=800&h=400&fit=crop',
+        description: 'Fragrant rice cooked with sweet green peas and mild spices.',
+        ingredients: 'Basmati rice, green peas, onions, whole spices, ghee, bay leaf'
+      },
+      'lemon-rice': {
+        name: 'Lemon Rice',
+        price: '120',
+        image: 'https://images.unsplash.com/photo-1596072200969-2deda1bbbcd0?w=800&h=400&fit=crop',
+        description: 'South Indian-style rice with a bright, citrusy flavor and tempered spices.',
+        ingredients: 'Basmati rice, lemon juice, mustard seeds, curry leaves, peanuts, turmeric'
+      },
+      'dal-fry': {
+        name: 'Dal Fry',
+        price: '130',
+        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
+        description: 'Yellow lentils cooked with a traditional tadka of cumin, garlic, and spices.',
+        ingredients: 'Yellow lentils, cumin, garlic, tomatoes, onions, turmeric, red chili'
+      },
+      'dal-tadka': {
+        name: 'Dal Tadka',
+        price: '139',
+        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
+        description: 'Mixed lentils elevated with a sizzling tempering of ghee and aromatic spices.',
+        ingredients: 'Mixed lentils, ghee, cumin, mustard seeds, dried red chilies, curry leaves, garlic'
+      },
+      'dal-handi': {
+        name: 'Dal Handi',
+        price: '149',
+        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
+        description: 'Slow-cooked lentils in a clay pot, resulting in deep, complex flavors.',
+        ingredients: 'Mixed lentils, cream, tomatoes, ginger, garlic, whole spices, ghee'
+      },
+      'dal-makhani': {
+        name: 'Dal Makhani',
+        price: '170',
+        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
+        description: 'The legendary black lentil dish - slow-simmered overnight with cream and butter.',
+        ingredients: 'Black lentils, kidney beans, butter, cream, tomatoes, ginger, garlic, kasuri methi'
+      },
+      'dal-bukhara': {
+        name: 'Dal Bukhara',
+        price: '145',
+        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
+        description: 'Our tribute to the iconic ITC recipe - rich, creamy, and utterly indulgent.',
+        ingredients: 'Black lentils, butter, cream, tomato paste, ginger, garlic, special spice blend'
+      }
+    };
+    
+    // Initialize SDK
     if (window.elementSdk) {
       window.elementSdk.init({
         defaultConfig,
-        onConfigChange,
-        mapToCapabilities,
-        mapToEditPanelValues
+        onConfigChange: async (config) => {
+          const logoText = document.getElementById('logo-text');
+          const footerLogo = document.getElementById('footer-logo');
+          if (logoText) logoText.textContent = config.restaurant_name || defaultConfig.restaurant_name;
+          if (footerLogo) footerLogo.textContent = config.restaurant_name || defaultConfig.restaurant_name;
+          
+          const heroHeadline = document.getElementById('hero-headline');
+          const heroSubheading = document.getElementById('hero-subheading');
+          if (heroHeadline) heroHeadline.textContent = config.hero_headline || defaultConfig.hero_headline;
+          if (heroSubheading) heroSubheading.textContent = config.hero_subheading || defaultConfig.hero_subheading;
+          
+          const contactPhone = document.getElementById('contact-phone');
+          const contactEmail = document.getElementById('contact-email');
+          const contactAddress = document.getElementById('contact-address');
+          if (contactPhone) contactPhone.textContent = config.phone_number || defaultConfig.phone_number;
+          if (contactEmail) contactEmail.textContent = config.email_address || defaultConfig.email_address;
+          if (contactAddress) contactAddress.innerHTML = (config.address || defaultConfig.address).replace(/\n/g, '<br>');
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['restaurant_name', config.restaurant_name || defaultConfig.restaurant_name],
+          ['hero_headline', config.hero_headline || defaultConfig.hero_headline],
+          ['hero_subheading', config.hero_subheading || defaultConfig.hero_subheading],
+          ['phone_number', config.phone_number || defaultConfig.phone_number],
+          ['email_address', config.email_address || defaultConfig.email_address],
+          ['address', config.address || defaultConfig.address]
+        ])
       });
     }
-
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-in').forEach(el => {
-      observer.observe(el);
-    });
-
-    document.getElementById('btn-explore').addEventListener('click', () => {
-      document.querySelector('section:nth-of-type(2)').scrollIntoView({ behavior: 'smooth' });
-    });
-
-    // Floating Feedback Button - Opens Google Maps for reviews
-    document.getElementById('floating-review-btn').addEventListener('click', () => {
-      const mapsUrl = (window.elementSdk && window.elementSdk.config && window.elementSdk.config.maps_link) || defaultConfig.maps_link;
-      if (mapsUrl && mapsUrl !== 'https://share.google/9tNweDuavZ5V9igRn') {
-        window.open(mapsUrl, '_blank', 'noopener,noreferrer');
-      } else {
-        alert('Please update the Google Maps link in the configuration first');
+    
+    function showMainPage() {
+      document.getElementById('main-page').classList.remove('hidden-page');
+      document.getElementById('dish-page').classList.add('hidden-page');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function showDishPage(dishId, name, price, category) {
+      const dish = dishData[dishId];
+      
+      document.getElementById('dish-title').textContent = dish ? dish.name : name;
+      document.getElementById('dish-price').textContent = price.startsWith('$') ? price : '₹' + price;
+      document.getElementById('dish-description').textContent = dish ? dish.description : 'A beautifully crafted dish featuring the finest ingredients, prepared with traditional techniques and modern presentation.';
+      document.getElementById('dish-ingredients').textContent = dish ? dish.ingredients : 'Premium ingredients prepared with care and expertise.';
+      if (dish) {
+        document.getElementById('dish-detail-image').src = dish.image;
       }
-    });
+      
+      document.getElementById('main-page').classList.add('hidden-page');
+      document.getElementById('dish-page').classList.remove('hidden-page');
+      
+      document.getElementById('app').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.querySelector('p').textContent = message;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2500);
+    }
+    
+    function addToOrder() {
+      const dishName = document.getElementById('dish-title').textContent;
+      showToast(${dishName} ,added, to, your, order,!);
+    }
   </script>
-
-<style>
-.review-float {
-  position: fixed;
-  bottom: 160px;   /* 👈 Upar shift */
-  right: 20px;
-  z-index: 9999;
-  animation: floatMove 2.5s ease-in-out infinite;
-}
-
-@keyframes floatMove {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-8px); }
-  100% { transform: translateY(0); }
-}
-
-.review-btn {
-  background: linear-gradient(135deg, #34a853, #0f9d58);
-  color: #fff;
-  padding: 13px 22px;
-  border-radius: 50px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 0 18px rgba(52,168,83,0.7);
-}
-</style>
-
-<div class="review-float">
-  <button class="review-btn" onclick="openReview()">
-    ⭐ Feedback / Review
-  </button>
-</div>
-
-<script>
-function openReview() {
-  window.open(
-    "https://share.google/9tNweDuavZ5V9igRn",
-    "_blank"
-  );
-}
-</script>
-
-
-
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cee1185f566338a',t:'MTc3MTI1NTY0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf186bc476933de',t:'MTc3MTI5MTg5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
