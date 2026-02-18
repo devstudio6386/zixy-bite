@@ -62,8 +62,21 @@
       </div>
     </header>
     
+    <!-- Search Bar -->
+    <div class="sticky top-16 z-40 bg-[#0D0D0D]/95 backdrop-blur-md px-4 py-3 border-b border-[#2A2A2A]">
+      <div class="relative">
+        <span class="absolute left-3 top-3 text-[#888888]">🔍</span>
+        <input 
+          type="text" 
+          id="search-input" 
+          placeholder="Search dishes..." 
+          class="w-full pl-10 pr-4 py-2 rounded-lg bg-[#1A1A1A] border border-[#2A2A2A] text-white placeholder-[#888888] focus:outline-none focus:border-[#A8E63D] transition-all"
+        >
+      </div>
+    </div>
+    
     <!-- Category Pills (Sticky) -->
-    <nav class="sticky top-16 z-40 bg-[#0D0D0D]/95 backdrop-blur-md py-3 px-4 border-b border-[#2A2A2A]">
+    <nav class="sticky top-28 z-40 bg-[#0D0D0D]/95 backdrop-blur-md py-3 px-4 border-b border-[#2A2A2A]">
       <div id="category-pills" class="flex gap-2 overflow-x-auto hide-scrollbar">
         <!-- Pills injected by JS -->
       </div>
@@ -435,6 +448,13 @@
     };
 
     let activeCategory = "All";
+    let searchQuery = "";
+
+    // Search functionality
+    document.getElementById('search-input').addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase();
+      renderMenu();
+    });
 
     function renderCategoryPills() {
       const container = document.getElementById('category-pills');
@@ -449,6 +469,8 @@
       container.querySelectorAll('.category-pill').forEach(btn => {
         btn.addEventListener('click', () => {
           activeCategory = btn.dataset.category;
+          document.getElementById('search-input').value = "";
+          searchQuery = "";
           renderCategoryPills();
           renderMenu();
           
@@ -464,9 +486,30 @@
 
     function renderMenu() {
       const container = document.getElementById('menu-container');
-      const filteredData = activeCategory === "All" 
+      let filteredData = activeCategory === "All" 
         ? menuData 
         : menuData.filter(c => c.category === activeCategory);
+
+      // Apply search filter
+      if (searchQuery) {
+        filteredData = filteredData.map(category => ({
+          ...category,
+          items: category.items.filter(item => 
+            item.name.toLowerCase().includes(searchQuery)
+          )
+        })).filter(category => category.items.length > 0);
+      }
+
+      if (filteredData.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12">
+            <span class="text-6xl mb-4 block">🔍</span>
+            <h3 class="font-heading font-bold text-xl text-white mb-2">No dishes found</h3>
+            <p class="text-[#888888]">Try searching for something else</p>
+          </div>
+        `;
+        return;
+      }
 
       container.innerHTML = filteredData.map(category => `
         <section id="section-${category.category.replace(/\s+/g, '-').toLowerCase()}" class="fade-in">
@@ -483,10 +526,7 @@
                 </div>
                 <div class="p-4">
                   <h3 class="font-heading font-bold text-white text-sm leading-snug">${item.name}</h3>
-                  <div class="flex items-center justify-between mt-3">
-                    <p class="text-[#A8E63D] font-bold text-lg">₹${item.price}</p>
-                    <button class="bg-[#A8E63D] hover:bg-[#7BC62D] text-[#0D0D0D] px-3 py-1 rounded-lg text-xs font-bold transition-all">Add</button>
-                  </div>
+                  <p class="text-[#A8E63D] font-bold text-lg mt-3">₹${item.price}</p>
                 </div>
               </div>
             `).join('')}
@@ -535,5 +575,5 @@
 
     init();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cfa431043a40186',t:'MTc3MTM4MzQ5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cfa4cc4616f0186',t:'MTc3MTM4Mzg5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
