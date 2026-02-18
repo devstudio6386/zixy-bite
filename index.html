@@ -3,1445 +3,537 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zixy Bite - Luxury Restaurant</title>
+  <title>Zixy Bite - Digital Menu</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --gold-start: #c8a95e;
-      --gold-end: #f5d27a;
-      --charcoal: #0f0f0f;
-      --charcoal-light: #1a1a1a;
-      --charcoal-lighter: #252525;
-    }
+    html, body { height: 100%; margin: 0; }
+    * { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, h5, h6, .font-heading { font-family: 'Poppins', sans-serif; }
     
-    * {
-      scrollbar-width: thin;
-      scrollbar-color: var(--gold-start) var(--charcoal);
-    }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     
-    *::-webkit-scrollbar {
-      width: 8px;
-    }
+    .category-pill { transition: all 0.3s ease; }
+    .category-pill.active { background: #A8E63D; color: #0D0D0D; box-shadow: 0 0 20px rgba(168, 230, 61, 0.4); }
     
-    *::-webkit-scrollbar-track {
-      background: var(--charcoal);
-    }
+    .menu-card { transition: all 0.3s ease; }
+    .menu-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(168, 230, 61, 0.15); }
     
-    *::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--gold-start), var(--gold-end));
-      border-radius: 4px;
-    }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     
-    .font-cinzel { font-family: 'Cinzel', serif; }
-    .font-playfair { font-family: 'Playfair Display', serif; }
-    .font-poppins { font-family: 'Poppins', sans-serif; }
+    .glow-effect { box-shadow: 0 0 30px rgba(168, 230, 61, 0.3); }
     
-    .gold-gradient {
-      background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
-    }
-    
-    .gold-text {
-      background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .gold-glow {
-      box-shadow: 0 0 30px rgba(200, 169, 94, 0.3), 0 0 60px rgba(200, 169, 94, 0.1);
-    }
-    
-    .gold-glow-soft {
-      box-shadow: 0 0 20px rgba(200, 169, 94, 0.15);
-    }
-    
-    .glassmorphism {
-      background: rgba(15, 15, 15, 0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(200, 169, 94, 0.2);
-    }
-    
-    .glassmorphism-light {
-      background: rgba(26, 26, 26, 0.8);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(200, 169, 94, 0.15);
-    }
-    
-    .nav-link {
-      position: relative;
-      transition: all 0.3s ease;
-      font-size: 0.875rem;
-      letter-spacing: 0.1em;
-      color: #e5e5e5;
-    }
-    
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--gold-start), var(--gold-end));
-      transition: width 0.3s ease;
-    }
-    
-    .nav-link:hover::after {
-      width: 100%;
-    }
-    
-    .nav-link:hover {
-      color: var(--gold-end);
-    }
-    
-    .btn-primary {
-      background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
-      color: #0f0f0f;
-      transition: all 0.4s ease;
-      box-shadow: 0 4px 20px rgba(200, 169, 94, 0.3);
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(200, 169, 94, 0.5);
-    }
-    
-    .btn-outline {
-      border: 2px solid var(--gold-start);
-      color: var(--gold-end);
-      transition: all 0.4s ease;
-      background: transparent;
-    }
-    
-    .btn-outline:hover {
-      background: rgba(200, 169, 94, 0.1);
-      box-shadow: 0 0 30px rgba(200, 169, 94, 0.3);
-      transform: translateY(-2px);
-    }
-    
-    .dish-card {
-      background: linear-gradient(145deg, rgba(26, 26, 26, 0.95), rgba(15, 15, 15, 0.98));
-      border: 1px solid rgba(200, 169, 94, 0.3);
-      border-radius: 16px;
+    .dish-image { 
+      width: 100%; 
+      height: 160px; 
+      background: linear-gradient(135deg, #2A2A2A 0%, #1A1A1A 100%);
+      border-radius: 12px 12px 0 0;
       overflow: hidden;
-      transition: all 0.4s ease;
-      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
-    .dish-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 50px rgba(200, 169, 94, 0.2);
-      border-color: var(--gold-start);
-    }
-    
-    .dish-image {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-    
-    .dish-card:hover .dish-image {
-      transform: scale(1.05);
-    }
-    
-    .price-badge {
-      background: linear-gradient(135deg, var(--gold-start), var(--gold-end));
-      color: #0f0f0f;
-      padding: 8px 16px;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 14px;
-    }
-    
-    .category-header {
-      text-align: center;
-      margin: 60px 0 40px 0;
-    }
-    
-    .category-title {
-      font-size: 2.25rem;
-      font-weight: bold;
-      margin-bottom: 8px;
-      font-family: 'Cinzel', serif;
-    }
-    
-    .category-subtitle {
-      font-size: 1.125rem;
-      font-style: italic;
-      color: #9ca3af;
-      margin-bottom: 30px;
-      font-family: 'Playfair Display', serif;
-    }
-    
-    .section-divider {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold-start), transparent);
-      margin: 80px 0;
-    }
-    
-    .hero-overlay {
-      background: linear-gradient(135deg, rgba(15, 15, 15, 0.85), rgba(15, 15, 15, 0.6), rgba(15, 15, 15, 0.85));
-    }
-    
-    .light-streak {
-      position: absolute;
-      top: 0;
-      right: 20%;
-      width: 2px;
-      height: 100%;
-      background: linear-gradient(180deg, transparent, var(--gold-start), var(--gold-end), transparent);
-      opacity: 0.4;
-      animation: streak 3s ease-in-out infinite;
-    }
-    
-    @keyframes streak {
-      0%, 100% { opacity: 0.2; transform: translateX(0); }
-      50% { opacity: 0.5; transform: translateX(5px); }
-    }
-    
-    .page-transition {
-      animation: fadeIn 0.5s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .hidden-page {
-      display: none;
-    }
-    
-    .testimonial-card {
-      background: linear-gradient(145deg, rgba(26, 26, 26, 0.9), rgba(15, 15, 15, 0.95));
-      border: 1px solid rgba(200, 169, 94, 0.2);
-      border-radius: 20px;
-      padding: 40px;
-      position: relative;
-    }
-    
-    .testimonial-card::before {
-      content: '"';
-      position: absolute;
-      top: 20px;
-      left: 30px;
-      font-size: 80px;
-      font-family: 'Playfair Display', serif;
-      color: rgba(200, 169, 94, 0.2);
-      line-height: 1;
-    }
-    
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 16px;
-      border: 1px solid rgba(200, 169, 94, 0.2);
-      aspect-ratio: 1;
-    }
-    
-    .gallery-item img {
+    .dish-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    
-    .gallery-item:hover img {
-      transform: scale(1.1);
-    }
-    
-    .gallery-item::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent, rgba(200, 169, 94, 0.1));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .gallery-item:hover::after {
-      opacity: 1;
-    }
-    
-    .star-rating {
-      color: var(--gold-start);
-      letter-spacing: 2px;
-      font-size: 14px;
-    }
-    
-    html {
-      scroll-behavior: smooth;
     }
   </style>
 </head>
-<body class="h-full font-poppins" style="background-color: #0f0f0f; color: #e5e5e5;">
-  <div id="app" class="h-full overflow-auto">
+<body class="h-full bg-[#0D0D0D] text-white overflow-auto">
+  <div id="app" class="w-full min-h-full max-w-2xl mx-auto relative">
     
-    <!-- STICKY HEADER WITH DIRECT NAVIGATION -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 glassmorphism">
-      <div class="max-w-7xl mx-auto px-6 py-4">
-        <div class="flex items-center justify-between gap-8">
-          <!-- Logo -->
-          <a href="#" onclick="showMainPage()" class="flex items-center gap-3 flex-shrink-0">
-            <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center">
-              <span class="font-cinzel text-xl font-bold" style="color: #0f0f0f;">Z</span>
-            </div>
-            <span id="logo-text" class="font-cinzel text-2xl gold-text font-semibold hidden sm:inline">Zixy Bite</span>
-          </a>
-          
-          <!-- Desktop Navigation - All Links Visible -->
-          <nav class="flex items-center gap-6 lg:gap-8 flex-wrap">
-            <a href="#home" class="nav-link">Home</a>
-            <a href="#paneer" class="nav-link">Paneer</a>
-            <a href="#veg" class="nav-link">Veg Sabji</a>
-            <a href="#bread" class="nav-link">Bread</a>
-            <a href="#rice" class="nav-link">Rice</a>
-            <a href="#dal" class="nav-link">Dal</a>
-            <a href="#gallery" class="nav-link">Gallery</a>
-            <a href="#testimonials" class="nav-link">Reviews</a>
-            <a href="#contact" class="nav-link">Contact</a>
-          </nav>
+    <!-- Sticky Header -->
+    <header class="sticky top-0 z-50 bg-[#0D0D0D]/95 backdrop-blur-md border-b border-[#2A2A2A] px-4 py-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#A8E63D] to-[#7BC62D] flex items-center justify-center glow-effect">
+          <span class="text-2xl">🍽️</span>
+        </div>
+        <div>
+          <h1 id="header-name" class="font-heading font-bold text-xl text-white leading-tight">Zixy Bite</h1>
+          <p id="header-tagline" class="text-xs text-[#888888]">Delicious Food, Delivered Hot</p>
         </div>
       </div>
     </header>
     
-    <!-- MAIN PAGE -->
-    <div id="main-page" class="page-transition">
-      
-      <!-- HERO SECTION -->
-      <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <!-- Background Image -->
-        <div class="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1920&h=1080&fit=crop" alt="Hero Background" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #2a2015, #0f0f0f)'"/>
-        </div>
-        
-        <!-- Golden Light Streak -->
-        <div class="light-streak"></div>
-        <div class="light-streak" style="right: 25%; animation-delay: 1s;"></div>
-        
-        <!-- Overlay -->
-        <div class="absolute inset-0 hero-overlay"></div>
-        
-        <!-- Content -->
-        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <div class="mb-8 flex justify-center gap-6 items-center">
-            <div class="flex-1 h-px bg-gradient-to-r from-transparent to-yellow-600" style="max-width: 100px;"></div>
-            <span class="text-2xl" style="color: #c8a95e;">✦</span>
-            <div class="flex-1 h-px bg-gradient-to-l from-transparent to-yellow-600" style="max-width: 100px;"></div>
-          </div>
-          
-          <h1 id="hero-headline" class="font-playfair text-5xl md:text-7xl font-bold mb-6 gold-text leading-tight">
-            ZIXY BITE RESTURANT
-          </h1>
-          
-          <p id="hero-subheading" class="font-poppins text-lg md:text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            A journey of flavor, artistry, and refined ambiance crafted for the discerning palate.
-          </p>
-          
-          <div class="flex flex-col sm:flex-row gap-6 justify-center">
-            <button class="btn-primary font-poppins px-10 py-4 rounded-full text-lg font-semibold tracking-wider">
-              Scroll down or click on quick links to Explore
-            </button>
-            <a href="#paneer" class="btn-outline font-poppins px-10 py-4 rounded-full text-lg font-semibold tracking-wider">
-              Explore Menu
-            </a>
-          </div>
-        </div>
-      </section>
-      
-      <!-- PANEER SECTION -->
-      <section id="paneer" class="py-16 px-15">
-        <div class="max-w-7xl mx-auto">
-          <div class="category-header">
-            <h2 class="category-title gold-text">PANEER</h2>
-            <p class="category-subtitle">Cottage Cheese Delicacies</p>
-          </div>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Matar Paneer -->
-            <div class="dish-card" onclick="showDishPage('matar-paneer', 'Matar Paneer', '230', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/matarpaneer.jpeg" alt="Matar Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Matar Paneer</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹230</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Kadhai Paneer -->
-            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/handipaneer.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Kadhai Paneer</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Paneer Tikka Masala -->
-            <div class="dish-card" onclick="showDishPage('paneer-tikka-masala', 'Paneer Tikka Masala', '249', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/kadhaipaneer.jpeg" alt="Paneer Tikka Masala" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Handi Paneer</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Palak Paneer -->
-            <div class="dish-card" onclick="showDishPage('palak-paneer', 'Palak Paneer', '270', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/specialhandi.jpeg" alt="Palak Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Special Handi Paneer</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹270</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Paneer Butter Masala -->
-            <div class="dish-card" onclick="showDishPage('paneer-butter-masala', 'Paneer Butter Masala', '290', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/paneertikka.jpeg" alt="Paneer Butter Masala" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Tikka Masala</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹290</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Shahi Paneer -->
-            <div class="dish-card" onclick="showDishPage('shahi-paneer', 'Shahi Paneer', '260', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/paneertakatak.jpeg" alt="Shahi Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Taka Tak</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹260</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-
-<!-- Kadhai Paneer -->
-            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerlababdar.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Lababdar</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-
-
-            <!-- Kadhai Paneer -->
-            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerkalimirch.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Kalimirch</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-
-
-            <!-- Kadhai Paneer -->
-            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/palakpaneer.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Palak Paneer</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Kadhai Paneer -->
-            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerbegam.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Begam Bahar</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Kadhai Paneer -->
-            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerkaju.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Kaju Korma</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Kadhai Paneer -->
-            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerdopyaza.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer do pyaza</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Kadhai Paneer -->
-            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/paneerbutter.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer butter masala</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Kadhai Paneer -->
-            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/shahi.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Shahi Paneer</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Kadhai Paneer -->
-            <div class="dish-card" onclick="showDishPage('kadhai-paneer', 'Kadhai Paneer', '249', 'paneer')">
-              <img src="https://ik.imagekit.io/hyi9kn2fq/chillipaneer.jpeg" alt="Kadhai Paneer" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Chilli Paneer</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-
-
-
-          </div>
-        </div>
-      </section>
-      
-      <div class="section-divider max-w-5xl mx-auto"></div>
-      
-      <!-- VEG SABJI SECTION -->
-      <section id="veg" class="py-16 px-6">
-        <div class="max-w-7xl mx-auto">
-          <div class="category-header">
-            <h2 class="category-title gold-text">VEG SABJI</h2>
-            <p class="category-subtitle">Garden Fresh Vegetables</p>
-          </div>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Aloo Masala -->
-            <div class="dish-card" onclick="showDishPage('aloo-masala', 'Aloo Masala', '129', 'veg')">
-              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Aloo Masala" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Aloo Masala</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹129</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Chana Masala -->
-            <div class="dish-card" onclick="showDishPage('chana-masala', 'Chana Masala', '190', 'veg')">
-              <img src="https://images.unsplash.com/photo-1565557623814-695d8d1ce342?w=500&h=300&fit=crop" alt="Chana Masala" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Chana Masala</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹190</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Mushroom Masala -->
-            <div class="dish-card" onclick="showDishPage('mushroom-masala', 'Mushroom Masala', '249', 'veg')">
-              <img src="https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=500&h=300&fit=crop" alt="Mushroom Masala" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Mushroom Masala</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹249</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Dum Aloo -->
-            <div class="dish-card" onclick="showDishPage('dum-aloo', 'Dum Aloo', '190', 'veg')">
-              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dum Aloo" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Dum Aloo</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹190</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Mix Veg -->
-            <div class="dish-card" onclick="showDishPage('mix-veg', 'Mix Veg', '170', 'veg')">
-              <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=300&fit=crop" alt="Mix Veg" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Mix Veg</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹170</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Banarasi Dum Aloo -->
-            <div class="dish-card" onclick="showDishPage('banarasi-dum-aloo', 'Banarasi Dum Aloo', '210', 'veg')">
-              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Banarasi Dum Aloo" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Banarasi Dum Aloo</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹210</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <div class="section-divider max-w-5xl mx-auto"></div>
-      
-      <!-- BREAD SECTION -->
-      <section id="bread" class="py-16 px-6">
-        <div class="max-w-7xl mx-auto">
-          <div class="category-header">
-            <h2 class="category-title gold-text">BREAD</h2>
-            <p class="category-subtitle">Tandoor Fresh Breads</p>
-          </div>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Tandoori Roti -->
-            <div class="dish-card" onclick="showDishPage('tandoori-roti', 'Tandoori Roti', '15', 'bread')">
-              <img src="https://images.unsplash.com/photo-1585521537190-6ba64e3c37ae?w=500&h=300&fit=crop" alt="Tandoori Roti" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Tandoori Roti</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹15</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Butter Naan -->
-            <div class="dish-card" onclick="showDishPage('butter-naan', 'Butter Naan', '45', 'bread')">
-              <img src="https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=500&h=300&fit=crop" alt="Butter Naan" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Butter Naan</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹45</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Laccha Paratha -->
-            <div class="dish-card" onclick="showDishPage('laccha-paratha', 'Laccha Paratha', '49', 'bread')">
-              <img src="https://images.unsplash.com/photo-1585078519514-1f67b2e4fee5?w=500&h=300&fit=crop" alt="Laccha Paratha" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Laccha Paratha</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹49</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Stuff Garlic Naan -->
-            <div class="dish-card" onclick="showDishPage('stuff-garlic-naan', 'Stuff Garlic Naan', '55', 'bread')">
-              <img src="https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=500&h=300&fit=crop" alt="Stuff Garlic Naan" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Stuff Garlic Naan</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹55</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Paneer Stuff Naan -->
-            <div class="dish-card" onclick="showDishPage('paneer-stuff-naan', 'Paneer Stuff Naan', '70', 'bread')">
-              <img src="https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=500&h=300&fit=crop" alt="Paneer Stuff Naan" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Stuff Naan</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹70</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Aalu Stuff Naan -->
-            <div class="dish-card" onclick="showDishPage('aalu-stuff-naan', 'Aalu Stuff Naan', '55', 'bread')">
-              <img src="https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=500&h=300&fit=crop" alt="Aalu Stuff Naan" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Aalu Stuff Naan</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹55</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <div class="section-divider max-w-5xl mx-auto"></div>
-      
-      <!-- RICE SECTION -->
-      <section id="rice" class="py-16 px-6">
-        <div class="max-w-7xl mx-auto">
-          <div class="category-header">
-            <h2 class="category-title gold-text">RICE</h2>
-            <p class="category-subtitle">Aromatic Rice Preparations</p>
-          </div>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Veg Fried Rice -->
-            <div class="dish-card" onclick="showDishPage('veg-fried-rice', 'Veg Fried Rice', '129', 'rice')">
-              <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=500&h=300&fit=crop" alt="Veg Fried Rice" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Veg Fried Rice</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹129</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Paneer Fried Rice -->
-            <div class="dish-card" onclick="showDishPage('paneer-fried-rice', 'Paneer Fried Rice', '149', 'rice')">
-              <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=500&h=300&fit=crop" alt="Paneer Fried Rice" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Paneer Fried Rice</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹149</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Schezwan Fried Rice -->
-            <div class="dish-card" onclick="showDishPage('schezwan-fried-rice', 'Schezwan Fried Rice', '190', 'rice')">
-              <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=500&h=300&fit=crop" alt="Schezwan Fried Rice" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Schezwan Fried Rice</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹190</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Jeera Rice -->
-            <div class="dish-card" onclick="showDishPage('jeera-rice', 'Jeera Rice', '120', 'rice')">
-              <img src="https://images.unsplash.com/photo-1596072200969-2deda1bbbag?w=500&h=300&fit=crop" alt="Jeera Rice" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Jeera Rice</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹120</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Mutter Pulao -->
-            <div class="dish-card" onclick="showDishPage('mutter-pulao', 'Mutter Pulao', '135', 'rice')">
-              <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=500&h=300&fit=crop" alt="Mutter Pulao" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Mutter Pulao</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹135</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Lemon Rice -->
-            <div class="dish-card" onclick="showDishPage('lemon-rice', 'Lemon Rice', '120', 'rice')">
-              <img src="https://images.unsplash.com/photo-1596072200969-2deda1bbbag?w=500&h=300&fit=crop" alt="Lemon Rice" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Lemon Rice</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹120</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <div class="section-divider max-w-5xl mx-auto"></div>
-      
-      <!-- DAL SECTION -->
-      <section id="dal" class="py-16 px-6">
-        <div class="max-w-7xl mx-auto">
-          <div class="category-header">
-            <h2 class="category-title gold-text">DAL</h2>
-            <p class="category-subtitle">Traditional Lentil Curries</p>
-          </div>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Dal Fry -->
-            <div class="dish-card" onclick="showDishPage('dal-fry', 'Dal Fry', '130', 'dal')">
-              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dal Fry" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Dal Fry</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹130</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Dal Tadka -->
-            <div class="dish-card" onclick="showDishPage('dal-tadka', 'Dal Tadka', '139', 'dal')">
-              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dal Tadka" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Dal Tadka</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹139</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Dal Handi -->
-            <div class="dish-card" onclick="showDishPage('dal-handi', 'Dal Handi', '149', 'dal')">
-              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dal Handi" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Dal Handi</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹149</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Dal Makhani -->
-            <div class="dish-card" onclick="showDishPage('dal-makhani', 'Dal Makhani', '170', 'dal')">
-              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dal Makhani" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Dal Makhani</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹170</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Dal Bukhara -->
-            <div class="dish-card" onclick="showDishPage('dal-bukhara', 'Dal Bukhara', '145', 'dal')">
-              <img src="https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=500&h=300&fit=crop" alt="Dal Bukhara" loading="lazy" class="dish-image" onerror="this.style.background='#2a1f15'"/>
-              <div class="p-4">
-                <h3 class="font-playfair text-lg font-semibold mb-2">Dal Bukhara</h3>
-                <div class="flex justify-between items-center">
-                  <span class="price-badge">₹145</span>
-                  <div class="star-rating">★★★★★</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <div class="section-divider max-w-5xl mx-auto"></div>
-      
-      <!-- GALLERY SECTION -->
-      <section id="gallery" class="py-16 px-6">
-        <div class="max-w-7xl mx-auto">
-          <div class="category-header">
-            <h2 class="category-title gold-text">GALLERY</h2>
-            <p class="category-subtitle">Our Elegant Ambiance</p>
-          </div>
-          
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-            <!-- Gallery Image 1 -->
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1517457373614-b7152f800fd1?w=400&h=400&fit=crop" alt="Restaurant Interior" loading="lazy" onerror="this.style.background='#2a1f15'"/>
-            </div>
-            
-            <!-- Gallery Image 2 -->
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1555939594-58d7cb561fc1?w=400&h=400&fit=crop" alt="Fine Dining" loading="lazy" onerror="this.style.background='#2a1f15'"/>
-            </div>
-            
-            <!-- Gallery Image 3 -->
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=400&h=400&fit=crop" alt="Plated Food" loading="lazy" onerror="this.style.background='#2a1f15'"/>
-            </div>
-            
-            <!-- Gallery Image 4 -->
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop" alt="Chef Presentation" loading="lazy" onerror="this.style.background='#2a1f15'"/>
-            </div>
-            
-            <!-- Gallery Image 5 -->
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1504674900967-74f0bf42b59e?w=400&h=400&fit=crop" alt="Elegant Table" loading="lazy" onerror="this.style.background='#2a1f15'"/>
-            </div>
-            
-            <!-- Gallery Image 6 -->
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1495195134817-aeb325b55b65?w=400&h=400&fit=crop" alt="Gourmet Dish" loading="lazy" onerror="this.style.background='#2a1f15'"/>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <div class="section-divider max-w-5xl mx-auto"></div>
-      
-      <!-- TESTIMONIALS SECTION -->
-      <section id="testimonials" class="py-16 px-6">
-        <div class="max-w-6xl mx-auto">
-          <div class="category-header">
-            <h2 class="category-title gold-text">TESTIMONIALS</h2>
-            <p class="category-subtitle">What Our Guests Say</p>
-          </div>
-          
-          <div class="grid md:grid-cols-3 gap-8">
-            <!-- Testimonial 1 -->
-            <div class="testimonial-card">
-              <p class="font-playfair text-gray-300 italic text-lg leading-relaxed mb-6 relative z-10">"An extraordinary dining experience. Every dish was a masterpiece, and the ambiance transported us to another world of elegance."</p>
-              <div class="flex items-center gap-4">
-                <div class="w-14 h-14 gold-gradient rounded-full flex items-center justify-center">
-                  <span class="font-cinzel text-xl font-bold" style="color: #0f0f0f;">AR</span>
-                </div>
-                <div>
-                  <h4 class="font-poppins font-semibold gold-text">Aisha Rahman</h4>
-                  <p class="font-poppins text-gray-500 text-sm">Food Critic</p>
-                </div>
-              </div>
-              <div class="star-rating mt-4">★★★★★</div>
-            </div>
-            
-            <!-- Testimonial 2 -->
-            <div class="testimonial-card">
-              <p class="font-playfair text-gray-300 italic text-lg leading-relaxed mb-6 relative z-10">"The chef's specials are truly exceptional. We celebrated our anniversary here and it exceeded all expectations."</p>
-              <div class="flex items-center gap-4">
-                <div class="w-14 h-14 gold-gradient rounded-full flex items-center justify-center">
-                  <span class="font-cinzel text-xl font-bold" style="color: #0f0f0f;">MS</span>
-                </div>
-                <div>
-                  <h4 class="font-poppins font-semibold gold-text">Michael Sterling</h4>
-                  <p class="font-poppins text-gray-500 text-sm">Regular Guest</p>
-                </div>
-              </div>
-              <div class="star-rating mt-4">★★★★★</div>
-            </div>
-            
-            <!-- Testimonial 3 -->
-            <div class="testimonial-card">
-              <p class="font-playfair text-gray-300 italic text-lg leading-relaxed mb-6 relative z-10">"From the paneer dishes to the dal makhani, every authentic flavor was perfectly balanced. A culinary journey worth repeating."</p>
-              <div class="flex items-center gap-4">
-                <div class="w-14 h-14 gold-gradient rounded-full flex items-center justify-center">
-                  <span class="font-cinzel text-xl font-bold" style="color: #0f0f0f;">PK</span>
-                </div>
-                <div>
-                  <h4 class="font-poppins font-semibold gold-text">Priya Kapoor</h4>
-                  <p class="font-poppins text-gray-500 text-sm">Culinary Blogger</p>
-                </div>
-              </div>
-              <div class="star-rating mt-4">★★★★★</div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <div class="section-divider max-w-5xl mx-auto"></div>
-      
-      <!-- CONTACT SECTION -->
-      <section id="contact" class="py-16 px-6">
-        <div class="max-w-4xl mx-auto">
-          <div class="category-header">
-            <h2 class="category-title gold-text">CONTACT US</h2>
-            <p class="category-subtitle">We'd Love to Hear From You</p>
-          </div>
-          
-          <div class="glassmorphism-light rounded-2xl p-8 md:p-12">
-            <div class="grid md:grid-cols-2 gap-12">
-              <div>
-                <h3 class="font-cinzel text-2xl gold-text mb-6">Get in Touch</h3>
-                <div class="space-y-6">
-                  <div class="flex items-start gap-4">
-                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center flex-shrink-0">
-                      <span class="text-xl">📞</span>
-                    </div>
-                    <div>
-                      <h4 class="font-poppins font-semibold text-white mb-1">Phone</h4>
-                      <p id="contact-phone" class="font-poppins text-gray-400">+1 (555) 123-4567</p>
-                    </div>
-                  </div>
-                  <div class="flex items-start gap-4">
-                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center flex-shrink-0">
-                      <span class="text-xl">✉️</span>
-                    </div>
-                    <div>
-                      <h4 class="font-poppins font-semibold text-white mb-1">Email</h4>
-                      <p id="contact-email" class="font-poppins text-gray-400">reservations@maisondoree.com</p>
-                    </div>
-                  </div>
-                  <div class="flex items-start gap-4">
-                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center flex-shrink-0">
-                      <span class="text-xl">📍</span>
-                    </div>
-                    <div>
-                      <h4 class="font-poppins font-semibold text-white mb-1">Address</h4>
-                      <p id="contact-address" class="font-poppins text-gray-400">123 Gourmet Street<br>Culinary District, CD 10001</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <h3 class="font-cinzel text-2xl gold-text mb-6">Opening Hours</h3>
-                <div class="space-y-4">
-                  <div class="flex justify-between border-b border-gray-800 pb-3">
-                    <span class="font-poppins text-gray-300">Monday - Thursday</span>
-                    <span class="font-poppins gold-text">5:00 PM - 10:00 PM</span>
-                  </div>
-                  <div class="flex justify-between border-b border-gray-800 pb-3">
-                    <span class="font-poppins text-gray-300">Friday - Saturday</span>
-                    <span class="font-poppins gold-text">5:00 PM - 11:00 PM</span>
-                  </div>
-                  <div class="flex justify-between border-b border-gray-800 pb-3">
-                    <span class="font-poppins text-gray-300">Sunday</span>
-                    <span class="font-poppins gold-text">4:00 PM - 9:00 PM</span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span class="font-poppins text-gray-300">Brunch (Sat-Sun)</span>
-                    <span class="font-poppins gold-text">11:00 AM - 3:00 PM</span>
-                  </div>
-                </div>
-                
-                <button class="btn-primary w-full mt-8 py-4 rounded-full font-poppins font-semibold tracking-wider">
-                  Make a Reservation
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <!-- FOOTER -->
-      <footer class="py-12 px-6 border-t" style="border-color: rgba(200, 169, 94, 0.2);">
-        <div class="max-w-6xl mx-auto">
-          <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center">
-                <span class="font-cinzel text-lg font-bold" style="color: #0f0f0f;">M</span>
-              </div>
-              <span id="footer-logo" class="font-cinzel text-xl gold-text"> Zixy Bite</span>
-            </div>
-            <p class="font-poppins text-gray-500 text-sm">© 2024 Zixy Bite. All rights reserved.</p>
-            <div class="flex gap-6">
-              <a href="#" class="font-poppins text-gray-400 hover:text-yellow-500 transition-colors text-sm">Privacy Policy</a>
-              <a href="#" class="font-poppins text-gray-400 hover:text-yellow-500 transition-colors text-sm">Terms of Service</a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
-    
-    <!-- DISH DETAIL PAGE -->
-    <div id="dish-page" class="hidden-page page-transition pt-24 pb-16 px-6">
-      <div class="max-w-4xl mx-auto">
-        <button onclick="showMainPage()" class="btn-outline px-6 py-3 rounded-full font-poppins text-sm mb-8 inline-flex items-center gap-2">
-          <span>←</span> Back to Menu
-        </button>
-        
-        <div class="glassmorphism-light rounded-2xl overflow-hidden gold-glow">
-          <!-- Dish Image -->
-          <img id="dish-detail-image" src="https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=800&h=400&fit=crop" alt="Dish" loading="lazy" class="w-full h-96 object-cover" onerror="this.style.background='#2a1f15'"/>
-          
-          <div class="p-8 md:p-12">
-            <div class="text-center mb-8">
-              <h1 id="dish-title" class="font-playfair text-4xl md:text-5xl font-bold gold-text mb-4">Dish Name</h1>
-              <span id="dish-price" class="price-badge text-xl">₹230</span>
-            </div>
-            
-            <div class="max-w-2xl mx-auto">
-              <p id="dish-description" class="font-playfair text-gray-300 text-lg leading-relaxed text-center mb-8 italic">
-                A beautifully crafted dish featuring the finest ingredients, prepared with traditional techniques and modern presentation.
-              </p>
-              
-              <div class="glassmorphism rounded-2xl p-6 mb-8">
-                <h3 class="font-cinzel text-xl gold-text mb-4 text-center">Ingredients</h3>
-                <p id="dish-ingredients" class="font-poppins text-gray-400 text-center leading-relaxed">
-                  Premium cottage cheese, aromatic spices, fresh cream, tomatoes, onions, ginger-garlic paste, kasuri methi.
-                </p>
-              </div>
-              
-              <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button onclick="addToOrder()" class="btn-primary px-10 py-4 rounded-full font-poppins font-semibold tracking-wider">
-                  Add to Order
-                </button>
-                <button onclick="showMainPage()" class="btn-outline px-10 py-4 rounded-full font-poppins font-semibold tracking-wider">
-                  Back to Menu
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+    <!-- Category Pills (Sticky) -->
+    <nav class="sticky top-16 z-40 bg-[#0D0D0D]/95 backdrop-blur-md py-3 px-4 border-b border-[#2A2A2A]">
+      <div id="category-pills" class="flex gap-2 overflow-x-auto hide-scrollbar">
+        <!-- Pills injected by JS -->
       </div>
-    </div>
+    </nav>
     
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 glassmorphism px-8 py-4 rounded-full gold-glow opacity-0 transition-all duration-300 pointer-events-none z-50">
-      <p class="font-poppins gold-text font-semibold">Added to your order!</p>
-    </div>
+    <!-- Menu Sections -->
+    <main id="menu-container" class="px-4 py-6 space-y-8">
+      <!-- Menu sections injected by JS -->
+    </main>
+    
   </div>
-  
+
   <script>
-    // Default configuration
-    const defaultConfig = {
-      restaurant_name: ' Zixy Bite',
-      hero_headline: 'Experience Culinary Excellence',
-      hero_subheading: 'A journey of flavor, artistry, and refined ambiance crafted for the discerning palate.',
-      phone_number: '+1 (555) 123-4567',
-      email_address: 'reservations@maisondoree.com',
-      address: '123 Gourmet Street\nCulinary District, CD 10001',
-      primary_color: '#c8a95e',
-      secondary_color: '#f5d27a',
-      background_color: '#0f0f0f',
-      text_color: '#e5e5e5',
-      surface_color: '#1a1a1a',
-      font_family: 'Playfair Display',
-      font_size: 16
-    };
-    
-    // Dish data with images
-    const dishData = {
-      'matar-paneer': {
-        name: 'Matar Paneer',
-        price: '230',
-        image: 'https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=800&h=400&fit=crop',
-        description: 'A classic North Indian delicacy featuring soft paneer cubes simmered in a rich, aromatic tomato-based gravy with tender green peas.',
-        ingredients: 'Fresh cottage cheese, green peas, tomatoes, onions, ginger-garlic paste, cream, kasuri methi, garam masala, turmeric, red chili powder'
+    const menuData = [
+      {
+        category: "Paneer",
+        emoji: "🧈",
+        items: [
+          { name: "Matter Paneer", price: 280, image_url: "https://images.unsplash.com/photo-1585937881907-d5dca9d4fc07?w=400&h=300&fit=crop" },
+          { name: "Kadhai Paneer", price: 290, image_url: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop" },
+          { name: "Handi Paneer", price: 300, image_url: "https://images.unsplash.com/photo-1565557623814-695d2c47edd3?w=400&h=300&fit=crop" },
+          { name: "Special Handi Paneer", price: 320, image_url: "https://images.unsplash.com/photo-1587317167ce8f49e06e21e44a31b2d1b5b5f5e5?w=400&h=300&fit=crop" },
+          { name: "Paneer Tikka Masala", price: 310, image_url: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop" },
+          { name: "Paneer Taka Tak", price: 270, image_url: "https://images.unsplash.com/photo-1585937881907-d5dca9d4fc07?w=400&h=300&fit=crop" },
+          { name: "Paneer Lababdar", price: 300, image_url: "https://images.unsplash.com/photo-1565557623814-695d2c47edd3?w=400&h=300&fit=crop" },
+          { name: "Paneer Kalimirch", price: 290, image_url: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop" },
+          { name: "Palak Paneer", price: 280, image_url: "https://images.unsplash.com/photo-1585958220723-7b8f4f03e80c?w=400&h=300&fit=crop" },
+          { name: "Paneer Begam Bahar", price: 320, image_url: "https://images.unsplash.com/photo-1587317167ce8f49e06e21e44a31b2d1b5b5f5e5?w=400&h=300&fit=crop" },
+          { name: "Paneer Kaju Korma", price: 350, image_url: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop" },
+          { name: "Paneer Do Pyaza", price: 270, image_url: "https://images.unsplash.com/photo-1585937881907-d5dca9d4fc07?w=400&h=300&fit=crop" },
+          { name: "Paneer Butter Masala", price: 330, image_url: "https://images.unsplash.com/photo-1565557623814-695d2c47edd3?w=400&h=300&fit=crop" },
+          { name: "Shahi Paneer", price: 340, image_url: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop" },
+          { name: "Chilli Paneer", price: 260, image_url: "https://images.unsplash.com/photo-1585958220723-7b8f4f03e80c?w=400&h=300&fit=crop" }
+        ]
       },
-      'kadhai-paneer': {
-        name: 'Kadhai Paneer',
-        price: '249',
-        image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&h=400&fit=crop',
-        description: 'A flavorful dish of paneer cubes cooked with bell peppers and onions in a spicy kadhai masala, served sizzling hot.',
-        ingredients: 'Cottage cheese, bell peppers, onions, tomatoes, kadhai masala, coriander seeds, dried red chilies, ginger, garlic'
+      {
+        category: "Bread",
+        emoji: "🫓",
+        items: [
+          { name: "Tandoori Roti", price: 40, image_url: "https://images.unsplash.com/photo-1535080ecf97ff782a2f09fe503d8b34?w=400&h=300&fit=crop" },
+          { name: "Butter Tandoori Roti", price: 50, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Plain Naan", price: 50, image_url: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop" },
+          { name: "Butter Naan", price: 60, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Missi Roti", price: 45, image_url: "https://images.unsplash.com/photo-1535080ecf97ff782a2f09fe503d8b34?w=400&h=300&fit=crop" },
+          { name: "Special Missi Roti", price: 55, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Laccha Paratha", price: 70, image_url: "https://images.unsplash.com/photo-1606298317494-ef3772751485?w=400&h=300&fit=crop" },
+          { name: "Stuff Garlic Naan", price: 70, image_url: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop" },
+          { name: "Laccha Butter Naan", price: 75, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Aalu Stuff Naan", price: 65, image_url: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop" },
+          { name: "Paneer Stuff Naan", price: 80, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Butter Tawa Roti", price: 50, image_url: "https://images.unsplash.com/photo-1535080ecf97ff782a2f09fe503d8b34?w=400&h=300&fit=crop" }
+        ]
       },
-      'paneer-tikka-masala': {
-        name: 'Paneer Tikka Masala',
-        price: '249',
-        image: 'https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=800&h=400&fit=crop',
-        description: 'Chargrilled paneer tikka pieces swimming in a luscious, smoky tomato-based curry with a hint of sweetness.',
-        ingredients: 'Marinated paneer tikka, tomatoes, cream, kasuri methi, honey, ginger, garlic, tikka masala spices'
+      {
+        category: "Rice",
+        emoji: "🍚",
+        items: [
+          { name: "Veg Fried Rice", price: 200, image_url: "https://images.unsplash.com/photo-1585857612519-38cc758d0cff?w=400&h=300&fit=crop" },
+          { name: "Paneer Fried Rice", price: 240, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Chilli Garlic Fried Rice", price: 210, image_url: "https://images.unsplash.com/photo-1585857612519-38cc758d0cff?w=400&h=300&fit=crop" },
+          { name: "Shezwan Fried Rice", price: 220, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Plain Rice", price: 120, image_url: "https://images.unsplash.com/photo-1585857612519-38cc758d0cff?w=400&h=300&fit=crop" },
+          { name: "Jeera Rice", price: 150, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Mutter Pulao", price: 180, image_url: "https://images.unsplash.com/photo-1585857612519-38cc758d0cff?w=400&h=300&fit=crop" },
+          { name: "Mutter Jeera Rice", price: 160, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Lemon Rice", price: 170, image_url: "https://images.unsplash.com/photo-1585857612519-38cc758d0cff?w=400&h=300&fit=crop" },
+          { name: "Sweet Rice", price: 200, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" }
+        ]
       },
-      'palak-paneer': {
-        name: 'Palak Paneer',
-        price: '270',
-        image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800&h=400&fit=crop',
-        description: 'A nutritious classic featuring paneer cubes nestled in a vibrant, silky spinach puree with subtle spicing.',
-        ingredients: 'Fresh spinach, paneer, cream, garlic, ginger, cumin, green chilies, garam masala, kasuri methi'
+      {
+        category: "Dal",
+        emoji: "🍲",
+        items: [
+          { name: "Dal Fry", price: 150, image_url: "https://images.unsplash.com/photo-1598377066383-b8a75d4fa5d8?w=400&h=300&fit=crop" },
+          { name: "Dal Tadka", price: 160, image_url: "https://images.unsplash.com/photo-1600581211007-11c75f5db141?w=400&h=300&fit=crop" },
+          { name: "Dal Handi", price: 170, image_url: "https://images.unsplash.com/photo-1598377066383-b8a75d4fa5d8?w=400&h=300&fit=crop" },
+          { name: "Dal Makhani", price: 200, image_url: "https://images.unsplash.com/photo-1600581211007-11c75f5db141?w=400&h=300&fit=crop" },
+          { name: "Dal Bukhara", price: 220, image_url: "https://images.unsplash.com/photo-1598377066383-b8a75d4fa5d8?w=400&h=300&fit=crop" }
+        ]
       },
-      'paneer-butter-masala': {
-        name: 'Paneer Butter Masala',
-        price: '290',
-        image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&h=400&fit=crop',
-        description: 'The quintessential crowd-pleaser - paneer in a rich, buttery tomato gravy that\'s creamy, slightly sweet, and absolutely divine.',
-        ingredients: 'Paneer, butter, tomatoes, cream, kasuri methi, honey, ginger-garlic paste, garam masala'
+      {
+        category: "Veg Sabji",
+        emoji: "🥗",
+        items: [
+          { name: "Aaloo Masala", price: 180, image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" },
+          { name: "Jeera Aalu", price: 160, image_url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop" },
+          { name: "Aaloo Dhaniya", price: 170, image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" },
+          { name: "Aaloo Mutter", price: 175, image_url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop" },
+          { name: "Mix Veg", price: 190, image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" },
+          { name: "Matar Mushroom", price: 210, image_url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop" },
+          { name: "Mushroom Masala", price: 220, image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" },
+          { name: "Chana Masala", price: 200, image_url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop" },
+          { name: "Dum Aalu", price: 230, image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" },
+          { name: "Chana Pindi", price: 160, image_url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop" },
+          { name: "Banarasi Dum Aaloo", price: 240, image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" },
+          { name: "Kashmiri Dum Aaloo", price: 250, image_url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop" }
+        ]
       },
-      'shahi-paneer': {
-        name: 'Shahi Paneer',
-        price: '260',
-        image: 'https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=800&h=400&fit=crop',
-        description: 'A truly royal dish - paneer pieces bathed in a rich, nutty gravy made with cream, cashews, and aromatic spices.',
-        ingredients: 'Paneer, cream, cashew paste, almond paste, saffron, rose water, cardamom, white pepper'
+      {
+        category: "Starter",
+        emoji: "🍢",
+        items: [
+          { name: "Dry Chilli Paneer", price: 280, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" },
+          { name: "Dry Veg Manchurian", price: 220, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Dragon Paneer Dry", price: 290, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" },
+          { name: "Veg Lollipop", price: 240, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Paneer Lollipop", price: 300, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" },
+          { name: "Chilli Manchurian Dry", price: 230, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Paneer Manchurian Dry", price: 270, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" },
+          { name: "Mushroom Lollipop", price: 260, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Red Pepper Ball", price: 250, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" },
+          { name: "Salt N Pepper", price: 280, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Crispy Corn", price: 200, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" }
+        ]
       },
-      'aloo-masala': {
-        name: 'Aloo Masala',
-        price: '129',
-        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
-        description: 'Simple yet satisfying - tender potato cubes cooked with aromatic spices in a home-style preparation.',
-        ingredients: 'Potatoes, cumin, turmeric, coriander, red chili powder, amchur, curry leaves, mustard seeds'
+      {
+        category: "Beverages",
+        emoji: "🥤",
+        items: [
+          { name: "Water", price: 20, image_url: "https://images.unsplash.com/photo-1556821552-5ff63b1ce257?w=400&h=300&fit=crop" },
+          { name: "Coffee", price: 80, image_url: "https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=400&h=300&fit=crop" },
+          { name: "Cappuccino Coffee", price: 120, image_url: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop" },
+          { name: "Cold Coffee with Ice-Cream", price: 150, image_url: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop" },
+          { name: "Chocolate Shake", price: 140, image_url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop" },
+          { name: "Oreo Shake", price: 160, image_url: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop" },
+          { name: "Kit Kat Shake", price: 160, image_url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop" },
+          { name: "Cold Drink", price: 60, image_url: "https://images.unsplash.com/photo-1554866585-ac94f1d5f5d4?w=400&h=300&fit=crop" }
+        ]
       },
-      'chana-masala': {
-        name: 'Chana Masala',
-        price: '190',
-        image: 'https://images.unsplash.com/photo-1565557623814-695d8d1ce342?w=800&h=400&fit=crop',
-        description: 'The iconic Punjabi chickpea curry - robust, tangy, and packed with bold spices.',
-        ingredients: 'Chickpeas, tomatoes, onions, chana masala, amchur, pomegranate seeds, ginger'
+      {
+        category: "Tea",
+        emoji: "☕",
+        items: [
+          { name: "Simple Tea", price: 30, image_url: "https://images.unsplash.com/photo-1597318616310-c6d2b1ba7b58?w=400&h=300&fit=crop" },
+          { name: "Ginger Tea", price: 40, image_url: "https://images.unsplash.com/photo-1544432415-f1e0f17eb430?w=400&h=300&fit=crop" },
+          { name: "Masala Tea", price: 50, image_url: "https://images.unsplash.com/photo-1597318616310-c6d2b1ba7b58?w=400&h=300&fit=crop" },
+          { name: "Elaichi Tea", price: 45, image_url: "https://images.unsplash.com/photo-1544432415-f1e0f17eb430?w=400&h=300&fit=crop" }
+        ]
       },
-      'mushroom-masala': {
-        name: 'Mushroom Masala',
-        price: '249',
-        image: 'https://images.unsplash.com/photo-1645112411341-6c4ee32510b8?w=800&h=400&fit=crop',
-        description: 'Succulent mushrooms simmered in a rich, spiced gravy that highlights their natural umami flavor.',
-        ingredients: 'Mushrooms, tomatoes, cream, onions, kasuri methi, garam masala, paprika'
+      {
+        category: "Noodles",
+        emoji: "🍜",
+        items: [
+          { name: "Veg Noodles", price: 180, image_url: "https://images.unsplash.com/photo-1561379814-5f4a1ebc5ac3?w=400&h=300&fit=crop" },
+          { name: "Paneer Noodles", price: 230, image_url: "https://images.unsplash.com/photo-1612874742237-415c69e61838?w=400&h=300&fit=crop" },
+          { name: "Hakka Noodles", price: 190, image_url: "https://images.unsplash.com/photo-1561379814-5f4a1ebc5ac3?w=400&h=300&fit=crop" },
+          { name: "Chilli Garlic Noodles", price: 200, image_url: "https://images.unsplash.com/photo-1612874742237-415c69e61838?w=400&h=300&fit=crop" },
+          { name: "Mushroom Noodles", price: 210, image_url: "https://images.unsplash.com/photo-1561379814-5f4a1ebc5ac3?w=400&h=300&fit=crop" },
+          { name: "Kashmiri Noodles", price: 250, image_url: "https://images.unsplash.com/photo-1612874742237-415c69e61838?w=400&h=300&fit=crop" },
+          { name: "Singapuri Noodles", price: 220, image_url: "https://images.unsplash.com/photo-1561379814-5f4a1ebc5ac3?w=400&h=300&fit=crop" },
+          { name: "Howrah Noodles", price: 240, image_url: "https://images.unsplash.com/photo-1612874742237-415c69e61838?w=400&h=300&fit=crop" },
+          { name: "Noodles with Gravy", price: 200, image_url: "https://images.unsplash.com/photo-1561379814-5f4a1ebc5ac3?w=400&h=300&fit=crop" },
+          { name: "Zixy Special Noodles", price: 270, image_url: "https://images.unsplash.com/photo-1612874742237-415c69e61838?w=400&h=300&fit=crop" }
+        ]
       },
-      'dum-aloo': {
-        name: 'Dum Aloo',
-        price: '190',
-        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
-        description: 'Baby potatoes slow-cooked in a rich, aromatic gravy until they absorb all the delicious flavors.',
-        ingredients: 'Baby potatoes, yogurt, tomatoes, onion paste, cashew paste, garam masala, saffron'
+      {
+        category: "Chinese",
+        emoji: "🥟",
+        items: [
+          { name: "Finger Chips", price: 120, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Chilli Potato", price: 160, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" },
+          { name: "Honey Chilli Potato", price: 180, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" }
+        ]
       },
-      'mix-veg': {
-        name: 'Mix Veg',
-        price: '170',
-        image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&h=400&fit=crop',
-        description: 'A colorful medley of seasonal vegetables cooked to perfection in a light, aromatic gravy.',
-        ingredients: 'Carrots, beans, peas, cauliflower, potatoes, tomatoes, onions, mixed spices'
+      {
+        category: "Pasta",
+        emoji: "🍝",
+        items: [
+          { name: "Red Sauce Pasta", price: 220, image_url: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=300&fit=crop" },
+          { name: "White Sauce Pasta", price: 240, image_url: "https://images.unsplash.com/photo-1612874742237-415c69e61838?w=400&h=300&fit=crop" },
+          { name: "Cheese Pasta", price: 260, image_url: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=300&fit=crop" },
+          { name: "Creamy Mushroom Pasta", price: 250, image_url: "https://images.unsplash.com/photo-1612874742237-415c69e61838?w=400&h=300&fit=crop" },
+          { name: "Oven Cheese Pasta", price: 280, image_url: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=300&fit=crop" }
+        ]
       },
-      'banarasi-dum-aloo': {
-        name: 'Banarasi Dum Aloo',
-        price: '210',
-        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
-        description: 'A Varanasi specialty featuring potatoes in a tangy, spiced yogurt gravy with a touch of sweetness.',
-        ingredients: 'Baby potatoes, yogurt, tomatoes, fennel, asafoetida, nigella seeds, sugar, tamarind'
+      {
+        category: "Momos",
+        emoji: "🥟",
+        items: [
+          { name: "Veg Steam Momos", price: 150, image_url: "https://images.unsplash.com/photo-1609780590863-6cededf41a55?w=400&h=300&fit=crop" },
+          { name: "Veg Fry Momos", price: 180, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Paneer Steam Momos", price: 200, image_url: "https://images.unsplash.com/photo-1609780590863-6cededf41a55?w=400&h=300&fit=crop" },
+          { name: "Paneer Fry Momos", price: 220, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Crispy Momos", price: 210, image_url: "https://images.unsplash.com/photo-1609780590863-6cededf41a55?w=400&h=300&fit=crop" }
+        ]
       },
-      'tandoori-roti': {
-        name: 'Tandoori Roti',
-        price: '15',
-        image: 'https://images.unsplash.com/photo-1585521537190-6ba64e3c37ae?w=800&h=400&fit=crop',
-        description: 'Classic whole wheat flatbread baked fresh in our traditional clay tandoor.',
-        ingredients: 'Whole wheat flour, water, salt'
+      {
+        category: "Roll",
+        emoji: "🌯",
+        items: [
+          { name: "Spring Roll", price: 130, image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" },
+          { name: "Noodle Wrap", price: 150, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" },
+          { name: "Paneer Wrap", price: 180, image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" },
+          { name: "Cheese Wrap", price: 200, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" },
+          { name: "Chilli Paneer Roll", price: 220, image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" }
+        ]
       },
-      'butter-naan': {
-        name: 'Butter Naan',
-        price: '45',
-        image: 'https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=800&h=400&fit=crop',
-        description: 'Our signature naan lavished with clarified butter and baked until golden.',
-        ingredients: 'Refined flour, butter, yeast, yogurt, milk, garlic butter topping'
+      {
+        category: "Burger",
+        emoji: "🍔",
+        items: [
+          { name: "Grilled Burger", price: 180, image_url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop" },
+          { name: "Cheese Burger", price: 200, image_url: "https://images.unsplash.com/photo-1550547990-9ef1f8f11b8b?w=400&h=300&fit=crop" },
+          { name: "Paneer Burger", price: 220, image_url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop" },
+          { name: "Double Cheese Burger", price: 240, image_url: "https://images.unsplash.com/photo-1550547990-9ef1f8f11b8b?w=400&h=300&fit=crop" },
+          { name: "Double Tikki Supreme", price: 280, image_url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop" },
+          { name: "Momos Burger", price: 260, image_url: "https://images.unsplash.com/photo-1550547990-9ef1f8f11b8b?w=400&h=300&fit=crop" }
+        ]
       },
-      'laccha-paratha': {
-        name: 'Laccha Paratha',
-        price: '49',
-        image: 'https://images.unsplash.com/photo-1585078519514-1f67b2e4fee5?w=800&h=400&fit=crop',
-        description: 'Multi-layered, flaky whole wheat flatbread with a buttery, crispy texture.',
-        ingredients: 'Wheat flour, ghee, oil, salt, water'
+      {
+        category: "Sandwich",
+        emoji: "🥪",
+        items: [
+          { name: "Grilled Sandwich", price: 150, image_url: "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=400&h=300&fit=crop" },
+          { name: "Paneer Sandwich", price: 180, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" },
+          { name: "Cheese Sandwich", price: 170, image_url: "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=400&h=300&fit=crop" },
+          { name: "Paneer Cheese Sandwich", price: 200, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" }
+        ]
       },
-      'stuff-garlic-naan': {
-        name: 'Stuff Garlic Naan',
-        price: '55',
-        image: 'https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=800&h=400&fit=crop',
-        description: 'Naan stuffed with aromatic roasted garlic and fresh herbs.',
-        ingredients: 'Refined flour, roasted garlic, herbs, butter, yeast, yogurt'
+      {
+        category: "Maggi",
+        emoji: "🍜",
+        items: [
+          { name: "Vegetable Maggi", price: 80, image_url: "https://images.unsplash.com/photo-1612874742237-415c69e61838?w=400&h=300&fit=crop" },
+          { name: "Paneer Vegetable Maggi", price: 130, image_url: "https://images.unsplash.com/photo-1561379814-5f4a1ebc5ac3?w=400&h=300&fit=crop" },
+          { name: "Pav Bhaji", price: 120, image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" },
+          { name: "Chola Bhatura", price: 140, image_url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop" }
+        ]
       },
-      'paneer-stuff-naan': {
-        name: 'Paneer Stuff Naan',
-        price: '70',
-        image: 'https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=800&h=400&fit=crop',
-        description: 'Premium naan stuffed with spiced cottage cheese for a protein-rich treat.',
-        ingredients: 'Refined flour, crumbled paneer, onions, green chilies, spices, butter'
+      {
+        category: "South Indian",
+        emoji: "🥞",
+        items: [
+          { name: "Plain Dosa", price: 150, image_url: "https://images.unsplash.com/photo-1585164749111-64f784b40ff3?w=400&h=300&fit=crop" },
+          { name: "Masala Dosa", price: 180, image_url: "https://images.unsplash.com/photo-1585958220723-7b8f4f03e80c?w=400&h=300&fit=crop" },
+          { name: "Paneer Dosa", price: 210, image_url: "https://images.unsplash.com/photo-1585164749111-64f784b40ff3?w=400&h=300&fit=crop" },
+          { name: "Onion Dosa", price: 170, image_url: "https://images.unsplash.com/photo-1585958220723-7b8f4f03e80c?w=400&h=300&fit=crop" },
+          { name: "Special Dosa", price: 220, image_url: "https://images.unsplash.com/photo-1585164749111-64f784b40ff3?w=400&h=300&fit=crop" },
+          { name: "Mushroom Dosa", price: 200, image_url: "https://images.unsplash.com/photo-1585958220723-7b8f4f03e80c?w=400&h=300&fit=crop" },
+          { name: "Siping Dosa", price: 190, image_url: "https://images.unsplash.com/photo-1585164749111-64f784b40ff3?w=400&h=300&fit=crop" }
+        ]
       },
-      'aalu-stuff-naan': {
-        name: 'Aalu Stuff Naan',
-        price: '55',
-        image: 'https://images.unsplash.com/photo-1618449095216-36b66fd2c28f?w=800&h=400&fit=crop',
-        description: 'Naan filled with spiced mashed potatoes - a satisfying meal in itself.',
-        ingredients: 'Refined flour, mashed potatoes, cumin, green chilies, coriander, butter'
+      {
+        category: "Soup",
+        emoji: "🍵",
+        items: [
+          { name: "Tomato Soup", price: 140, image_url: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop" },
+          { name: "Sweet Corn Soup", price: 160, image_url: "https://images.unsplash.com/photo-1600581211007-11c75f5db141?w=400&h=300&fit=crop" },
+          { name: "Hot & Sour Soup", price: 170, image_url: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop" },
+          { name: "Manchow Soup", price: 180, image_url: "https://images.unsplash.com/photo-1600581211007-11c75f5db141?w=400&h=300&fit=crop" },
+          { name: "Peking Soup", price: 190, image_url: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop" }
+        ]
       },
-      'veg-fried-rice': {
-        name: 'Veg Fried Rice',
-        price: '129',
-        image: 'https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=800&h=400&fit=crop',
-        description: 'Wok-tossed rice with colorful vegetables and Asian aromatics.',
-        ingredients: 'Basmati rice, mixed vegetables, soy sauce, garlic, ginger, spring onions'
+      {
+        category: "Pizza",
+        emoji: "🍕",
+        items: [
+          { name: "Cheese Onion", price: 250, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Cheese Corn", price: 260, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Cheese Tomato", price: 260, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Cheese Capsicum", price: 270, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Cheese Pizza", price: 280, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Double Cheese Pizza", price: 320, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Onion Capsicum", price: 280, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Onion Corn", price: 290, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Onion Tomato", price: 280, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Capsicum Corn", price: 300, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Capsicum Tomato", price: 300, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Onion Paneer", price: 330, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Capsicum Paneer", price: 340, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Tomato Paneer", price: 330, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Corn Paneer", price: 340, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Mix Veg Pizza", price: 350, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Veggie Crush", price: 370, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Paneer Makhani", price: 380, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Spicy Paneer", price: 360, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Kadhai Paneer", price: 390, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Farm House", price: 400, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Zixy Special Pizza", price: 420, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Veg Supreme Pizza", price: 410, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" },
+          { name: "Extra Cheese", price: 430, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Cheese Brust", price: 450, image_url: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop" }
+        ]
       },
-      'paneer-fried-rice': {
-        name: 'Paneer Fried Rice',
-        price: '149',
-        image: 'https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=800&h=400&fit=crop',
-        description: 'Indo-Chinese fried rice elevated with crispy paneer cubes.',
-        ingredients: 'Basmati rice, paneer, vegetables, soy sauce, chili sauce, spring onions'
+      {
+        category: "Raita",
+        emoji: "🥛",
+        items: [
+          { name: "Plain Curd", price: 50, image_url: "https://images.unsplash.com/photo-1535638066928-ab7c9ab60908?w=400&h=300&fit=crop" },
+          { name: "Boondi Raita", price: 80, image_url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop" },
+          { name: "Kheera Raita", price: 90, image_url: "https://images.unsplash.com/photo-1535638066928-ab7c9ab60908?w=400&h=300&fit=crop" },
+          { name: "Mix Raita", price: 100, image_url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop" },
+          { name: "Sweet Raita", price: 110, image_url: "https://images.unsplash.com/photo-1535638066928-ab7c9ab60908?w=400&h=300&fit=crop" }
+        ]
       },
-      'schezwan-fried-rice': {
-        name: 'Schezwan Fried Rice',
-        price: '190',
-        image: 'https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=800&h=400&fit=crop',
-        description: 'Bold and spicy rice tossed with our house-made Schezwan sauce.',
-        ingredients: 'Basmati rice, Schezwan sauce, vegetables, garlic, spring onions, sesame oil'
+      {
+        category: "Paratha",
+        emoji: "🫓",
+        items: [
+          { name: "Aalu Paratha", price: 70, image_url: "https://images.unsplash.com/photo-1606298317494-ef3772751485?w=400&h=300&fit=crop" },
+          { name: "Paneer Paratha", price: 90, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Gobhi Paratha", price: 75, image_url: "https://images.unsplash.com/photo-1606298317494-ef3772751485?w=400&h=300&fit=crop" },
+          { name: "Muli Paratha", price: 70, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Mushroom Paratha", price: 85, image_url: "https://images.unsplash.com/photo-1606298317494-ef3772751485?w=400&h=300&fit=crop" }
+        ]
       },
-      'jeera-rice': {
-        name: 'Jeera Rice',
-        price: '120',
-        image: 'https://images.unsplash.com/photo-1596072200969-2deda1bbbcd0?w=800&h=400&fit=crop',
-        description: 'Aromatic basmati rice tempered with cumin seeds and ghee.',
-        ingredients: 'Basmati rice, cumin seeds, ghee, bay leaf, whole spices'
+      {
+        category: "Salad",
+        emoji: "🥗",
+        items: [
+          { name: "Onion Salad", price: 50, image_url: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop" },
+          { name: "Green Salad", price: 60, image_url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop" },
+          { name: "Kheera Salad", price: 55, image_url: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop" }
+        ]
       },
-      'mutter-pulao': {
-        name: 'Mutter Pulao',
-        price: '135',
-        image: 'https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=800&h=400&fit=crop',
-        description: 'Fragrant rice cooked with sweet green peas and mild spices.',
-        ingredients: 'Basmati rice, green peas, onions, whole spices, ghee, bay leaf'
+      {
+        category: "Kulcha",
+        emoji: "🫓",
+        items: [
+          { name: "Aalu Kulcha", price: 80, image_url: "https://images.unsplash.com/photo-1606787620763-f860780a01f9?w=400&h=300&fit=crop" },
+          { name: "Paneer Kulcha", price: 100, image_url: "https://images.unsplash.com/photo-1596040305258-f5fc0f1f66ae?w=400&h=300&fit=crop" },
+          { name: "Mushroom Kulcha", price: 95, image_url: "https://images.unsplash.com/photo-1606787620763-f860780a01f9?w=400&h=300&fit=crop" }
+        ]
       },
-      'lemon-rice': {
-        name: 'Lemon Rice',
-        price: '120',
-        image: 'https://images.unsplash.com/photo-1596072200969-2deda1bbbcd0?w=800&h=400&fit=crop',
-        description: 'South Indian-style rice with a bright, citrusy flavor and tempered spices.',
-        ingredients: 'Basmati rice, lemon juice, mustard seeds, curry leaves, peanuts, turmeric'
+      {
+        category: "Papad",
+        emoji: "🍘",
+        items: [
+          { name: "Papad Dry", price: 30, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" },
+          { name: "Papad Fry", price: 40, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Papad Kheera", price: 50, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" },
+          { name: "Masala Papad", price: 60, image_url: "https://images.unsplash.com/photo-1609501676725-7186f017a4b0?w=400&h=300&fit=crop" },
+          { name: "Paneer Masala Papad", price: 80, image_url: "https://images.unsplash.com/photo-1599599810694-2f5c56e1f108?w=400&h=300&fit=crop" }
+        ]
       },
-      'dal-fry': {
-        name: 'Dal Fry',
-        price: '130',
-        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
-        description: 'Yellow lentils cooked with a traditional tadka of cumin, garlic, and spices.',
-        ingredients: 'Yellow lentils, cumin, garlic, tomatoes, onions, turmeric, red chili'
+      {
+        category: "Ice-Cream",
+        emoji: "🍨",
+        items: [
+          { name: "Vanilla", price: 100, image_url: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop" },
+          { name: "Butter Scotch", price: 120, image_url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop" }
+        ]
       },
-      'dal-tadka': {
-        name: 'Dal Tadka',
-        price: '139',
-        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
-        description: 'Mixed lentils elevated with a sizzling tempering of ghee and aromatic spices.',
-        ingredients: 'Mixed lentils, ghee, cumin, mustard seeds, dried red chilies, curry leaves, garlic'
+      {
+        category: "Sweet",
+        emoji: "🍮",
+        items: [
+          { name: "Gulab Jamun", price: 80, image_url: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop" },
+          { name: "Rasgulla", price: 90, image_url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop" },
+          { name: "Raj Bhog", price: 100, image_url: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop" }
+        ]
       },
-      'dal-handi': {
-        name: 'Dal Handi',
-        price: '149',
-        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
-        description: 'Slow-cooked lentils in a clay pot, resulting in deep, complex flavors.',
-        ingredients: 'Mixed lentils, cream, tomatoes, ginger, garlic, whole spices, ghee'
-      },
-      'dal-makhani': {
-        name: 'Dal Makhani',
-        price: '170',
-        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
-        description: 'The legendary black lentil dish - slow-simmered overnight with cream and butter.',
-        ingredients: 'Black lentils, kidney beans, butter, cream, tomatoes, ginger, garlic, kasuri methi'
-      },
-      'dal-bukhara': {
-        name: 'Dal Bukhara',
-        price: '145',
-        image: 'https://images.unsplash.com/photo-1585042207866-55c156adc4f8?w=800&h=400&fit=crop',
-        description: 'Our tribute to the iconic ITC recipe - rich, creamy, and utterly indulgent.',
-        ingredients: 'Black lentils, butter, cream, tomato paste, ginger, garlic, special spice blend'
+      {
+        category: "Special Thali",
+        emoji: "🍽️",
+        items: [
+          { name: "Normal Thali", price: 300, image_url: "https://images.unsplash.com/photo-1589985643671-7f4b3c0acb72?w=400&h=300&fit=crop" },
+          { name: "Special Thali", price: 450, image_url: "https://images.unsplash.com/photo-1585837981291-c8987c1d6771?w=400&h=300&fit=crop" }
+        ]
       }
+    ];
+
+    const defaultConfig = {
+      restaurant_name: "Zixy Bite",
+      tagline: "Delicious Food, Delivered Hot",
+      location: "Your Location",
+      phone: "Your Phone Number",
+      timing: "10 AM – 11 PM"
     };
-    
-    // Initialize SDK
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange: async (config) => {
-          const logoText = document.getElementById('logo-text');
-          const footerLogo = document.getElementById('footer-logo');
-          if (logoText) logoText.textContent = config.restaurant_name || defaultConfig.restaurant_name;
-          if (footerLogo) footerLogo.textContent = config.restaurant_name || defaultConfig.restaurant_name;
+
+    let activeCategory = "All";
+
+    function renderCategoryPills() {
+      const container = document.getElementById('category-pills');
+      const categories = ["All", ...menuData.map(c => c.category)];
+      
+      container.innerHTML = categories.map(cat => `
+        <button class="category-pill flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium border border-[#2A2A2A] bg-[#1A1A1A] text-[#888888] whitespace-nowrap ${activeCategory === cat ? 'active' : ''}" data-category="${cat}">
+          ${cat === "All" ? "🍽️ All" : `${menuData.find(c => c.category === cat)?.emoji || ''} ${cat}`}
+        </button>
+      `).join('');
+      
+      container.querySelectorAll('.category-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeCategory = btn.dataset.category;
+          renderCategoryPills();
+          renderMenu();
           
-          const heroHeadline = document.getElementById('hero-headline');
-          const heroSubheading = document.getElementById('hero-subheading');
-          if (heroHeadline) heroHeadline.textContent = config.hero_headline || defaultConfig.hero_headline;
-          if (heroSubheading) heroSubheading.textContent = config.hero_subheading || defaultConfig.hero_subheading;
-          
-          const contactPhone = document.getElementById('contact-phone');
-          const contactEmail = document.getElementById('contact-email');
-          const contactAddress = document.getElementById('contact-address');
-          if (contactPhone) contactPhone.textContent = config.phone_number || defaultConfig.phone_number;
-          if (contactEmail) contactEmail.textContent = config.email_address || defaultConfig.email_address;
-          if (contactAddress) contactAddress.innerHTML = (config.address || defaultConfig.address).replace(/\n/g, '<br>');
-        },
-        mapToCapabilities: (config) => ({
-          recolorables: [
-            {
-              get: () => config.primary_color || defaultConfig.primary_color,
-              set: (value) => {
-                config.primary_color = value;
-                window.elementSdk.setConfig({ primary_color: value });
-              }
+          if (activeCategory !== "All") {
+            const section = document.getElementById(`section-${activeCategory.replace(/\s+/g, '-').toLowerCase()}`);
+            if (section) {
+              setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
             }
-          ],
-          borderables: [],
-          fontEditable: undefined,
-          fontSizeable: undefined
-        }),
-        mapToEditPanelValues: (config) => new Map([
-          ['restaurant_name', config.restaurant_name || defaultConfig.restaurant_name],
-          ['hero_headline', config.hero_headline || defaultConfig.hero_headline],
-          ['hero_subheading', config.hero_subheading || defaultConfig.hero_subheading],
-          ['phone_number', config.phone_number || defaultConfig.phone_number],
-          ['email_address', config.email_address || defaultConfig.email_address],
-          ['address', config.address || defaultConfig.address]
-        ])
+          }
+        });
       });
     }
-    
-    function showMainPage() {
-      document.getElementById('main-page').classList.remove('hidden-page');
-      document.getElementById('dish-page').classList.add('hidden-page');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    function renderMenu() {
+      const container = document.getElementById('menu-container');
+      const filteredData = activeCategory === "All" 
+        ? menuData 
+        : menuData.filter(c => c.category === activeCategory);
+
+      container.innerHTML = filteredData.map(category => `
+        <section id="section-${category.category.replace(/\s+/g, '-').toLowerCase()}" class="fade-in">
+          <div class="flex items-center gap-2 mb-4 sticky top-32 bg-[#0D0D0D] py-2 z-30">
+            <span class="text-3xl">${category.emoji}</span>
+            <h2 class="font-heading font-bold text-2xl text-white">${category.category}</h2>
+            <span class="text-xs text-[#888888] bg-[#1A1A1A] px-3 py-1 rounded-full">${category.items.length}</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            ${category.items.map(item => `
+              <div class="menu-card bg-[#1A1A1A] rounded-2xl overflow-hidden border border-[#2A2A2A]">
+                <div class="dish-image">
+                  <img src="${item.image_url}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='${category.emoji}';">
+                </div>
+                <div class="p-4">
+                  <h3 class="font-heading font-bold text-white text-sm leading-snug">${item.name}</h3>
+                  <div class="flex items-center justify-between mt-3">
+                    <p class="text-[#A8E63D] font-bold text-lg">₹${item.price}</p>
+                    <button class="bg-[#A8E63D] hover:bg-[#7BC62D] text-[#0D0D0D] px-3 py-1 rounded-lg text-xs font-bold transition-all">Add</button>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      `).join('');
     }
-    
-    function showDishPage(dishId, name, price, category) {
-      const dish = dishData[dishId];
+
+    async function onConfigChange(config) {
+      document.getElementById('header-name').textContent = config.restaurant_name || defaultConfig.restaurant_name;
+      document.getElementById('header-tagline').textContent = config.tagline || defaultConfig.tagline;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["restaurant_name", config.restaurant_name || defaultConfig.restaurant_name],
+        ["tagline", config.tagline || defaultConfig.tagline],
+        ["location", config.location || defaultConfig.location],
+        ["phone", config.phone || defaultConfig.phone],
+        ["timing", config.timing || defaultConfig.timing]
+      ]);
+    }
+
+    function init() {
+      renderCategoryPills();
+      renderMenu();
       
-      document.getElementById('dish-title').textContent = dish ? dish.name : name;
-      document.getElementById('dish-price').textContent = price.startsWith('$') ? price : '₹' + price;
-      document.getElementById('dish-description').textContent = dish ? dish.description : 'A beautifully crafted dish featuring the finest ingredients, prepared with traditional techniques and modern presentation.';
-      document.getElementById('dish-ingredients').textContent = dish ? dish.ingredients : 'Premium ingredients prepared with care and expertise.';
-      if (dish) {
-        document.getElementById('dish-detail-image').src = dish.image;
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues
+        });
       }
-      
-      document.getElementById('main-page').classList.add('hidden-page');
-      document.getElementById('dish-page').classList.remove('hidden-page');
-      
-      document.getElementById('app').scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.querySelector('p').textContent = message;
-      toast.classList.remove('opacity-0');
-      toast.classList.add('opacity-100');
-      
-      setTimeout(() => {
-        toast.classList.remove('opacity-100');
-        toast.classList.add('opacity-0');
-      }, 2500);
-    }
-    
-    function addToOrder() {
-      const dishName = document.getElementById('dish-title').textContent;
-      showToast(${dishName} ,added, to, your, order,!);
-    }
+
+    init();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf186bc476933de',t:'MTc3MTI5MTg5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cfa431043a40186',t:'MTc3MTM4MzQ5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
